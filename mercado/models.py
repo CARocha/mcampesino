@@ -62,9 +62,97 @@ class PersonaContacto(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
+class TipoOrganizacion(models.Model):
+	nombre = models.CharField(max_length=200)
+
+	class Meta:
+		verbose_name_plural = 'Tipo de organización de los mercados'
+
+	def __unicode__(self):
+		return self.nombre
+
+CHOICE_OPERACION = (
+						(1, 'Mercado'),
+						(2, 'Feria')
+					)
+
+class Periodicidad(models.Model):
+	nombre = models.CharField(max_length=200)
+
+	class Meta:
+		verbose_name_plural = 'Periodicidad de operaciones'
+
+	def __unicode__(self):
+		return self.nombre
+
+class TiposOrganizacionesApoyan(models.Model):
+	nombre = models.CharField(max_length=200)
+
+	class Meta:
+		verbose_name_plural = 'Tipos de organizaciones que apoyan los mercados'
+
+	def __unicode__(self):
+		return self.nombre
+
+class ApoyanMercado(models.Model):
+	nombre = models.CharField('Nombre de la organización', max_length=200)
+	tipo_organizacion = models.ForeignKey(TiposOrganizacionesApoyan)
+	correo = models.EmailField()
+
+	class Meta:
+		verbose_name_plural = 'Organizaciones apoyan mercados'
+
+	def __unicode__(self):
+		return self.nombre
+
+class ProductosFrescos(models.Model):
+	nombre = models.CharField(max_length=200)
+
+	class Meta:
+		verbose_name_plural = 'Productos frescos'
+
+	def __unicode__(self):
+		return self.nombre
+
+class ProductosProcesados(models.Model):
+	nombre = models.CharField(max_length=200)
+
+	class Meta:
+		verbose_name_plural = 'Productos procesados'
+
+	def __unicode__(self):
+		return self.nombre
+
+
 class ActividadMercado(models.Model):
+	fkmercado = models.ForeignKey(RegistroMercado)
 	fecha_actividad = models.DateField('Fecha de inicio de la actividad del mercado')
 	direccion = models.TextField('Dirección física del mercado')
 	persona_contacto = 	models.ForeignKey(PersonaContacto)
 	telefono = models.IntegerField()    
+	correo = models.EmailField()
+	pagina_url = models.URLField('Página web')
+	tipo_organizacion_mercado = models.ForeignKey(TipoOrganizacion)
+	modalidad = models.IntegerField('Modalidad de operación', 
+		                            choices=CHOICE_OPERACION)
+	periodicidad = models.ForeignKey(Periodicidad)
+	vendedor_hombre = models.IntegerField()
+	vendedor_mujer = models.IntegerField()
+	comprador_hombre = models.IntegerField()
+	comprador_mujer = models.IntegerField()
+	abastecen_hombre = models.IntegerField()
+	abastecen_mujer = models.IntegerField()
+	apoyan_mercado = models.ManyToManyField(ApoyanMercado)
+	productos_frescos = models.ManyToManyField(ProductosFrescos)
+	productos_procesados = models.ManyToManyField(ProductosProcesados)
+
+	class Meta:
+		verbose_name_plural = "inicio de actividad del mercado"
+
+	def __unicode__(self):
+		return u'%s' % str(self.fecha_actividad) 
+
+
+
+
 
