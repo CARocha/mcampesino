@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^chaining/', include('smart_selects.urls')),
     #url de pruebas luego deberan ser eliminadas
     url(r'^$',direct_to_template,{'template': 'base.html'}),
 

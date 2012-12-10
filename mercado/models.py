@@ -21,6 +21,7 @@ class Registro(models.Model):
 		return u'%s || %s' % (self.nombre_persona, self.nombre_organizacion)
 
 class RegistroMercado(models.Model):
+	fkregistro = models.ForeignKey(Registro)
 	nombre_mercado = models.CharField('Nombre del mercado', 
 		                               max_length=200)
 	pais = models.ForeignKey(Pais)
