@@ -11,8 +11,8 @@ class Registro(models.Model):
 		                              , max_length=200)
 	nombre_organizacion = models.CharField('Nombre de organización a que pertenece la persona'
 		                              , max_length=200)
-	correo = models.EmailField()
-	telefono = models.IntegerField('Teléfono')
+	correo = models.EmailField(null=True, blank=True)
+	telefono = models.IntegerField('Teléfono',null=True, blank=True)
 
 	class Meta:
 		verbose_name=u'Registro de persona'
@@ -153,6 +153,54 @@ class ActividadMercado(models.Model):
 		return u'%s' % str(self.fecha_actividad) 
 
 
+#------------------ Movimiento de los productos en el mercado campesino
 
+class Movimiento(models.Model):
+	nombre_mercado = models.ForeignKey(RegistroMercado)
+	fecha = models.DateField('Fecha de registro')
+	nombre_persona = models.CharField('Nombre de persona que registra informacion'
+		                              , max_length=200)
+	organizacion_persona = models.CharField(max_length=200)
+	correo = models.EmailField(null=True, blank=True)
+	telefono = models.IntegerField(null=True, blank=True)
 
+	class Meta:
+		verbose_name_plural = "Movimiento de los productos en el mercado"
 
+	def __unicode__(self):
+		return self.nombre_mercado
+
+CHOICE_CALIDAD = (
+					(1, 'Excelente'),
+					(2, 'Muy buena'),
+					(3, 'Buena'),
+					(4, 'Mala')
+	             )
+
+class MovimientoProductosFresco(models.Model):
+	fkmovimiento = models.ForeignKey(Movimiento)
+	producto_fresco = models.ForeignKey(ProductosFrescos)
+	volumen_venta_global = models.FloatField()
+	precio_promedio = models.FloatField()
+	precio_municipal = models.FloatField()
+	calidad = models.IntegerField(choices=CHOICE_CALIDAD)
+
+	class Meta:
+		verbose_name_plural = "Movimiento de productos frescos"
+
+	def __unicode__(self):
+		return self.calidad
+
+class MovimientoProductosProcesados(models.Model):
+	fkmovimiento = models.ForeignKey(Movimiento)
+	fkproducto_fresco = models.ForeignKey(ProductosFrescos)
+	volumen_venta_global = models.FloatField()
+	precio_promedio = models.FloatField()
+	precio_municipal = models.FloatField()
+	calidad = models.IntegerField(choices=CHOICE_CALIDAD)
+
+	class Meta:
+		verbose_name_plural = "Movimiento de productos procesados"
+
+	def __unicode__(self):
+		return self.calidad
