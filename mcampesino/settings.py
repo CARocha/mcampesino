@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'lugar',
     'mercado',
     'smart_selects',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
