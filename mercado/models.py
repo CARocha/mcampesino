@@ -151,7 +151,7 @@ class ActividadMercado(models.Model):
 		verbose_name_plural = "inicio de actividad del mercado"
 
 	def __unicode__(self):
-		return u'%s' % str(self.fecha_actividad) 
+		return u'mercado: %s - %s' % (self.fkmercado, str(self.fecha_actividad)) 
 
 
 #------------------ Movimiento de los productos en el mercado campesino
@@ -169,7 +169,7 @@ class Movimiento(models.Model):
 		verbose_name_plural = "Movimiento de los productos en el mercado"
 
 	def __unicode__(self):
-		return self.nombre_mercado
+		return self.nombre_persona
 
 CHOICE_CALIDAD = (
 					(1, 'Excelente'),
@@ -189,12 +189,12 @@ class MovimientoProductosFresco(models.Model):
 	class Meta:
 		verbose_name_plural = "Movimiento de productos frescos"
 
-	def __unicode__(self):
-		return self.calidad
+	# def __unicode__(self):
+	# 	return self.calidad
 
 class MovimientoProductosProcesados(models.Model):
 	fkmovimiento = models.ForeignKey(Movimiento)
-	fkproducto_fresco = models.ForeignKey(ProductosFrescos)
+	fkproducto_fresco = models.ForeignKey(ProductosProcesados)
 	volumen_venta_global = models.FloatField()
 	precio_promedio = models.FloatField()
 	precio_municipal = models.FloatField()
@@ -203,5 +203,5 @@ class MovimientoProductosProcesados(models.Model):
 	class Meta:
 		verbose_name_plural = "Movimiento de productos procesados"
 
-	def __unicode__(self):
-		return self.calidad
+	# def __unicode__(self):
+	# 	return self.calidad

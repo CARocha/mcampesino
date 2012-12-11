@@ -1,4 +1,5 @@
 from django.contrib import admin
+from autocomplete.widgets import *
 from models import *
 
 
@@ -18,7 +19,16 @@ admin.site.register(TiposOrganizacionesApoyan)
 admin.site.register(ApoyanMercado)
 admin.site.register(ProductosFrescos)
 admin.site.register(ProductosProcesados)
-admin.site.register(ActividadMercado)
+
+class ActividadMercadoAdmin(admin.ModelAdmin):
+	class Media:
+		css = {
+            'all': ('/files/css/chosen.css',),
+       	}
+		js = ('/files/js/pimp.js','/files/js/chosen.jquery.js')
+
+
+admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
 
 class MovimientoProductosFrescoInline(admin.StackedInline):
@@ -29,11 +39,20 @@ class MovimientoProductosProcesadosInline(admin.StackedInline):
 	model = MovimientoProductosProcesados
 	extra = 1
 
-class MovimientoAdmin(admin.ModelAdmin):
-	date_hierarchy = 'fecha'
-	list_display = ('nombre_mercado', 'nombre_persona', 'organizacion_persona',)
-	list_filter = ('nombre_mercado',)
-	inlines = [MovimientoProductosFrescoInline, 
+#class MovimientoAdmin(admin.ModelAdmin):
+#	date_hierarchy = 'fecha'
+#	list_display = ('nombre_mercado', 'nombre_persona', 'organizacion_persona',)
+#	list_filter = ('nombre_mercado',)
+#	inlines = [MovimientoProductosFrescoInline, 
+#	           MovimientoProductosProcesadosInline]
+
+class MovimientoAdmin(AutocompleteModelAdmin):
+    search_fields = ['__unicode__']
+    related_search_fields = {
+
+                'nombre_mercado': ('nombre_mercado',),
+        }
+    inlines = [MovimientoProductosFrescoInline, 
 	           MovimientoProductosProcesadosInline]
 
 admin.site.register(Movimiento, MovimientoAdmin)

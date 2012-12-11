@@ -14,7 +14,7 @@ class Pais(models.Model):
 
 class Departamento(models.Model):
     id = models.IntegerField("Código", primary_key=True)
-    fkpais = models.ForeignKey(Pais)
+    pais = models.ForeignKey(Pais)
     nombre = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(unique=True, null=True, help_text="Usado como url unica(autorellenado)")
     extension = models.DecimalField("Extension Territorials", max_digits=10, decimal_places=2, null=True)
