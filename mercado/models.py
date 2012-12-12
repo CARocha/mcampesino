@@ -90,7 +90,7 @@ class TiposOrganizacionesApoyan(models.Model):
 	nombre = models.CharField(max_length=200)
 
 	class Meta:
-		verbose_name_plural = 'Tipos de organizaciones que apoyan los mercados'
+		verbose_name_plural = 'Tipos de organizaciones'
 
 	def __unicode__(self):
 		return self.nombre
@@ -126,7 +126,7 @@ class ProductosProcesados(models.Model):
 
 
 class ActividadMercado(models.Model):
-	fkmercado = models.ForeignKey(RegistroMercado)
+	fkmercado = models.ForeignKey(RegistroMercado, verbose_name=u'Mercados')
 	fecha_actividad = models.DateField('Fecha de inicio de la actividad del mercado')
 	direccion = models.TextField('Dirección física del mercado')
 	persona_contacto = 	models.ForeignKey(PersonaContacto)

@@ -1,4 +1,7 @@
 /* @group Base */
+.chosen {
+  width: 200px;
+}
 #id_fkmercado {
   width: 200px;
 }

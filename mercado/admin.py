@@ -1,6 +1,7 @@
 from django.contrib import admin
 from autocomplete.widgets import *
-from models import *
+from mercado.models import *
+from mercado.forms import *
 
 
 class RegistroMercadoInline(admin.StackedInline):
@@ -21,11 +22,24 @@ admin.site.register(ProductosFrescos)
 admin.site.register(ProductosProcesados)
 
 class ActividadMercadoAdmin(admin.ModelAdmin):
+	form = ActividadForm
+	fieldsets = (
+        (None, {
+            'fields': (('fkmercado', 'fecha_actividad'),)
+        }),
+        (None, {
+            'fields': ('direccion', ('persona_contacto', 'telefono', 'correo', 'pagina_url'),
+                       'tipo_organizacion_mercado','modalidad','periodicidad',
+                       ('vendedor_hombre','vendedor_mujer'),('comprador_hombre','comprador_mujer'),
+                       ('abastecen_hombre','abastecen_mujer'),
+                       'apoyan_mercado','productos_frescos','productos_procesados')
+        }),
+        )
 	class Media:
 		css = {
             'all': ('/files/css/chosen.css',),
        	}
-		js = ('/files/js/jquery.js','/files/js/chosen.jquery.js','/files/js/pimp.js',)
+		js = ('/files/js/jquery.min.js','/files/js/chosen.jquery.js','/files/js/pimp.js',)
 
 
 admin.site.register(ActividadMercado, ActividadMercadoAdmin)

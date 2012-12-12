@@ -1,5 +1,6 @@
 (function($){
     $(document).ready(function(){
+        $('.chosen').chosen();
         $('#id_fkmercado').chosen();
         $('.chozen').not(':hidden').chosen();
         
