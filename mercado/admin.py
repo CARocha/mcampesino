@@ -25,7 +25,7 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
 		css = {
             'all': ('/files/css/chosen.css',),
        	}
-		js = ('/files/js/pimp.js','/files/js/chosen.jquery.js')
+		js = ('/files/js/jquery.js','/files/js/chosen.jquery.js','/files/js/pimp.js',)
 
 
 admin.site.register(ActividadMercado, ActividadMercadoAdmin)
