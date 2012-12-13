@@ -29,10 +29,10 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
         }),
         (None, {
             'fields': ('direccion', ('persona_contacto', 'telefono', 'correo', 'pagina_url'),
-                       'tipo_organizacion_mercado','modalidad','periodicidad',
+                       ('tipo_organizacion_mercado','modalidad','periodicidad'),
                        ('vendedor_hombre','vendedor_mujer'),('comprador_hombre','comprador_mujer'),
                        ('abastecen_hombre','abastecen_mujer'),
-                       'apoyan_mercado','productos_frescos','productos_procesados')
+                       ('apoyan_mercado','productos_frescos','productos_procesados'))
         }),
         )
 	class Media:
@@ -46,22 +46,36 @@ admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
 
 class MovimientoProductosFrescoInline(admin.StackedInline):
-	model = MovimientoProductosFresco
-	extra = 1
+    model = MovimientoProductosFresco
+    fieldsets = (
+            (None, {
+                'fields': ((('producto_fresco'),
+                ('volumen_venta_global','precio_promedio',
+                'precio_municipal','calidad')))
+        }),
+    )
+    extra = 1
 
 class MovimientoProductosProcesadosInline(admin.StackedInline):
-	model = MovimientoProductosProcesados
-	extra = 1
-
-#class MovimientoAdmin(admin.ModelAdmin):
-#	date_hierarchy = 'fecha'
-#	list_display = ('nombre_mercado', 'nombre_persona', 'organizacion_persona',)
-#	list_filter = ('nombre_mercado',)
-#	inlines = [MovimientoProductosFrescoInline, 
-#	           MovimientoProductosProcesadosInline]
+    model = MovimientoProductosProcesados
+    fieldsets = (
+            (None, {
+                'fields': ((('fkproducto_fresco'),
+                ('volumen_venta_global','precio_promedio',
+                'precio_municipal','calidad')))
+        }),
+    )
+    extra = 1
 
 class MovimientoAdmin(AutocompleteModelAdmin):
     search_fields = ['__unicode__']
+    fieldsets = (
+            (None, {
+                'fields': (('nombre_mercado', 'fecha'),
+                ('nombre_persona','organizacion_persona'),
+                ('correo','telefono'))
+        }),
+    )
     related_search_fields = {
 
                 'nombre_mercado': ('nombre_mercado',),

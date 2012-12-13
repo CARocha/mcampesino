@@ -194,7 +194,7 @@ class MovimientoProductosFresco(models.Model):
 
 class MovimientoProductosProcesados(models.Model):
 	fkmovimiento = models.ForeignKey(Movimiento)
-	fkproducto_fresco = models.ForeignKey(ProductosProcesados)
+	fkproducto_fresco = models.ForeignKey(ProductosProcesados, verbose_name=u'Producto procesados')
 	volumen_venta_global = models.FloatField()
 	precio_promedio = models.FloatField()
 	precio_municipal = models.FloatField()

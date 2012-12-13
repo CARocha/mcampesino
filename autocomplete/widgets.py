@@ -35,7 +35,7 @@ from django.utils.functional import update_wrapper
 #csrf_protect_m = method_decorator( csrf_protect )
 
 media_css={ 'all': ( '%scss/jquery.autocomplete.css' % settings.STATIC_URL, ) }
-media_js=( '%sadmin/js/jquery.autocomplete.js' % settings.STATIC_URL, )
+media_js=( '%sjs/jquery.autocomplete.js' % settings.STATIC_URL, )
 
 
 class ForeignKeySearchInput( forms.HiddenInput ):
