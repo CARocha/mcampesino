@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chaining/', include('smart_selects.urls')),
     #url de pruebas luego deberan ser eliminadas
-    url(r'^$',direct_to_template,{'template': 'base.html'}),
+    url(r'^$',direct_to_template,{'template': 'index.html'}),
 
 )
 
