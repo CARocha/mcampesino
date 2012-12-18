@@ -47,6 +47,8 @@ admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
 class MovimientoProductosFrescoInline(admin.StackedInline):
     model = MovimientoProductosFresco
+    form = MovimientoProductosFrescoForm
+    template = 'mercado/admin/stacked.html'
     fieldsets = (
             (None, {
                 'fields': ((('producto_fresco'),
