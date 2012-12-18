@@ -22,7 +22,7 @@ admin.site.register(ProductosFrescos)
 admin.site.register(ProductosProcesados)
 
 class ActividadMercadoAdmin(admin.ModelAdmin):
-	form = ActividadForm
+	filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')
 	fieldsets = (
         (None, {
             'fields': (('fkmercado', 'fecha_actividad'),)
