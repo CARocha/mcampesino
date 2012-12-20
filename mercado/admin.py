@@ -22,7 +22,7 @@ admin.site.register(ProductosFrescos)
 admin.site.register(ProductosProcesados)
 
 class ActividadMercadoAdmin(admin.ModelAdmin):
-	form = ActividadForm
+	filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')
 	fieldsets = (
         (None, {
             'fields': (('fkmercado', 'fecha_actividad'),)
@@ -47,6 +47,8 @@ admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
 class MovimientoProductosFrescoInline(admin.StackedInline):
     model = MovimientoProductosFresco
+    form = MovimientoProductosFrescoForm
+    template = 'mercado/admin/stacked.html'
     fieldsets = (
             (None, {
                 'fields': ((('producto_fresco'),
