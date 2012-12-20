@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^chaining/', include('smart_selects.urls')),
     #url de pruebas luego deberan ser eliminadas
     url(r'^$',direct_to_template,{'template': 'index.html'}),
+    url(r'^explora/$',direct_to_template,{'template': 'explora.html'}),
 
 )
 

@@ -31,9 +31,9 @@
             <center>
               <img src="{{ STATIC_URL }}img/logo.png" class="logo">
               <nav class="nav">
-                <a href="#">EXPLORA<br><span>mercados</span></a>
-                <a href="#" class="seleccionado">CONOCE<br><span>el sistema</span></a>
-                <a href="#">COLABORA<br><span>con datos</span></a>
+                <a id="explora" href="/explora">EXPLORA<br><span>mercados</span></a>
+                <a id="sistema" href="/">CONOCE<br><span>el sistema</span></a>
+                <a id="datos" href="/colabora">COLABORA<br><span>con datos</span></a>
                 <div class="clearfix"></a>
               </nav>
             </center>
@@ -51,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-              Desarrollado por SIMAS bajo plataforma Django
+              Desarrollado por <a href="http://www.simas.org.ni">SIMAS</a> bajo plataforma <a href="http://www.djangoproject.org">Django</a>
           </div>
         </div>
       </div> <!-- /container -->
@@ -60,5 +60,7 @@
     <!-- JS -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    {%block extra%}
+    {%endblock%}
   </body>
 </html>

@@ -1,0 +1,52 @@
+{% extends "base.html"%}
+{%block extra%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#explora').addClass("seleccionado");
+    });
+</script>
+{%endblock%}
+{%block content%}
+    <section class="titulo">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="titulo-main">Explorando mercados campesinos registrados</div>
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+
+    <section class="contenido">
+      <div class="container">
+        <div class="row">
+          <div class="span2">
+            <div class="sidebar-mapa">
+              <a href="#">Toda Nicaragua</a>
+              <a href="#">Chinandega</a>
+              <a href="#">Leon</a>
+              <a href="#">Managua</a>
+              <a href="#">Masaya</a>
+              <a href="#">Granada</a>
+              <a href="#">Carazo</a>
+              <a href="#">Rivas</a>
+              <a href="#">Chontales</a>
+              <a href="#">Boaco</a>
+              <a href="#">Matagalpa</a>
+              <a href="#">Jinotega</a>
+              <a href="#">Esteli</a>
+              <a href="#">Nueva Segovia</a>
+              <a href="#">Madriz</a>
+              <a href="#">RAAS</a>
+              <a href="#">RAAN</a>
+              <br>
+            </div>
+          </div>
+          <div class="span10">
+            <div class="mapa">
+            </div>
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+{%endblock%}
