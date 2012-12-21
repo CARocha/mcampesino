@@ -7,7 +7,7 @@
 </script>
 {%endblock%}
 {%block content%}
-    <section class="titulo">
+    <section class="titulo interna">
       <div class="container">
         <div class="row">
           <div class="span12">
@@ -23,7 +23,7 @@
           <div class="span2">
             <div class="sidebar-mapa">
               <a href="#">Toda Nicaragua</a>
-              <a href="#">Chinandega</a>
+              <a href="#" class="on">Chinandega</a>
               <a href="#">Leon</a>
               <a href="#">Managua</a>
               <a href="#">Masaya</a>
@@ -39,11 +39,38 @@
               <a href="#">Madriz</a>
               <a href="#">RAAS</a>
               <a href="#">RAAN</a>
+              <div class="clearfix"></div>
               <br>
             </div>
           </div>
           <div class="span10">
             <div class="mapa">
+              <form class="form-inline">
+                
+                <div class="selects">
+                  <select>
+                    <option>productos</option>
+                    <option>cacao</option>
+                    <option>maiz</option>
+                    <option>frijol</option>
+                    <option>papaya</option>
+                  </select>
+                  <select>
+                    <option>miembros</option>
+                    <option>cooperativas</option>
+                    <option>independientes</option>
+                  </select>
+                  <select class="last">
+                    <option>tipos</option>
+                    <option>mercados campesinos</option>
+                    <option>mercados comunitarios</option>
+                  </select>
+               </div>  
+               <button type="submit" class="boton">Actualizar mapa</button>
+              </form>
+              <div class="mapa-interno">
+                 <iframe width='745' height='470' frameBorder='0' src='http://a.tiles.mapbox.com/v3/byroncorrales.map-tcxnk6dp.html#8/12.49800000000003/-85.226'></iframe>
+              </div>
             </div>
           </div>
         </div>
