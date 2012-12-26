@@ -1,0 +1,90 @@
+{% extends "base.html"%}
+{%block extra%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#explora').addClass("seleccionado");
+    });
+</script>
+{%endblock%}
+{%block content%}
+    <section class="titulo interna mercado">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <a href="/explora/" class="regresar">← Regresar</a>
+            <div class="titulo-main">Mercado Campesino Siuna</div>
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+
+    <section class="ficha-descripcion mercado">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <div class="titulo-descripcion"><i class="icon-star"></i> &nbsp;DESCRIPCION</div>
+            <div class="descripcion-mercado">
+              <p>Donec sed odio dui. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div>
+          </div>
+          <div class="span6">
+              <div id="myCarousel" class="carousel slide">
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                  <div class="active item"><img src="{{ STATIC_URL }}img/fotocarrusel1.png"></div>
+                  <div class="item"><img src="{{ STATIC_URL }}img/fotocarrusel2.png"></div>
+                </div>
+                <!-- Carousel nav -->
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+              </div>
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+
+    <section class="extra-info">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <b>Departamento</b> RAAS &nbsp;|&nbsp; <b>Municipio</b> Siuna &nbsp;|&nbsp; <b>Horarios</b> Domingos 8am a 5pm &nbsp;|&nbsp; <b>Contacto</b> Martha Olivera
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+
+    <section class="productos">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+              <div class="tabbable tabs-left">
+                  <ul class="nav nav-tabs">
+                      <li class="active">
+                        <a href="#lA" data-toggle="tab">Productos<br><img src="{{ STATIC_URL }}img/productos.png"></a>
+                      </li>
+                      <li class="">
+                        <a href="#lB" data-toggle="tab">Vendedores<br><img src="{{ STATIC_URL }}img/vendedor.png"></a>
+                      </li>
+                      <li class="">
+                        <a href="#lC" data-toggle="tab">Compradores<br><img src="{{ STATIC_URL }}img/comprador.png"></a>
+                      </li>
+                  </ul>
+              <div class="tab-content">
+                  <div class="tab-pane active" id="lA">
+                      <p>Prodcutos</p>
+                  </div>
+                  <div class="tab-pane" id="lB">
+                      <p>vendedores</p>
+                  </div>
+                  <div class="tab-pane" id="lC">
+                     <p>compradores</p>
+                  </div>
+              </div>
+              
+          </div>
+        </div>
+      </div> <!-- /container -->
+    </section> 
+
+
+{%endblock%}
