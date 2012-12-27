@@ -5,13 +5,180 @@
         $('#explora').addClass("seleccionado");
     });
 </script>
+<script src="{{STATIC_URL}}js/highcharts.js"></script>
+<script src="{{STATIC_URL}}js/tab.min.js"></script>
+<link href="{{STATIC_URL}}css/tab.css" rel="stylesheet">
+<script type="text/javascript">
+  Tab.setOptions({
+    position           : "top",     // top, bottom
+    autohide           : false,      // hide tab menus on mouse leave
+    animation          : 'blind-h', // slide-h, slide-v, slide-t, slide-r, slide-b, slide-l, blind-h, blind-v, fade, rotate
+    speed              : 500,       // animation speed (in ms)
+    shortcut           : true,      // display tab menu shortcuts
+    indicator          : false,      // display indicator of tab position on clicking tab
+    keyboard           : true,     // use left/right arrows keys to navigate tabs
+    slideshow          : false      // enable slideshow
+  });
+</script>
+<script type="text/javascript">
+// Para el grafico test
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            colors: [
+              '#ff7f6d', 
+              '#7e7d7d', 
+            ],
+            credits: {
+               text: '',
+            },
+            title: {
+                text: 'Precios del Maiz',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Mercado Siuna',
+                x: -20
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'C$ cordobas x quintal'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#e3e3e3'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'C$';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Precio de mercado',
+                data: [400, 390, 350, 370, 390, 415, 480, 450, 500, 490, 500, 510]
+            },  {
+                name: 'Precio municipal',
+                data: [410, 390, 380, 410, 420, 450, 540, 550, 550, 540, 530, 550]
+            }]
+        });
+    });   
+});
+
+$(function () {
+    var chart2;
+    $(document).ready(function() {
+        chart2 = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container2',
+                zoomType: 'x',
+                spacingRight: 20
+            },
+            credits: {
+               text: '',
+            },
+            title: {
+                text: 'Volumen de venta del Maiz'
+            },
+            subtitle: {
+                text: 'Mercado Siuna'
+            },
+            xAxis: {
+                type: 'datetime',
+                maxZoom: 14 * 24 * 3600000, // fourteen days
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Quintales'
+                },
+                showFirstLabel: false
+            },
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, 'rgba(2,0,0,0)']
+                        ]
+                    },
+                    lineWidth: 1,
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                radius: 5
+                            }
+                        }
+                    },
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+    
+            series: [{
+                type: 'area',
+                name: 'Quintales',
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: Date.UTC(2006, 0, 01),
+                data: [
+                    400,545,123,455,344,567,234,455,550,600,780,656,440,467,550,660,700,800,900,600,700,450,500,600,670,600,620,560,600,630,630,620,610,600,700,800
+                ]
+            }]
+        });
+    });
+    
+});
+
+    $(document).ready(function() {
+      $('#prodcutos-procesados').addClass('active');
+    });  
+
+</script>
+
 {%endblock%}
 {%block content%}
     <section class="titulo interna mercado">
       <div class="container">
         <div class="row">
           <div class="span12">
-            <a href="/explora/" class="regresar">← Regresar</a>
+           <!-- <a href="/explora/" class="regresar">← Regresar</a>-->
             <div class="titulo-main">Mercado Campesino Siuna</div>
           </div>
         </div>
@@ -52,7 +219,6 @@
         </div>
       </div> <!-- /container -->
     </section> 
-
     <section class="productos">
       <div class="container">
         <div class="row">
@@ -60,27 +226,184 @@
               <div class="tabbable tabs-left">
                   <ul class="nav nav-tabs">
                       <li class="active">
-                        <a href="#lA" data-toggle="tab">Productos<br><img src="{{ STATIC_URL }}img/productos.png"></a>
+                        <a href="#productos-frescos" data-toggle="tab">Productos frescos<br><img src="{{ STATIC_URL }}img/productos.png"></a>
+                      </li>
+                      <li>
+                        <a href="#productos-procesados" data-toggle="tab">Productos procesados<br><img src="{{ STATIC_URL }}img/queso.png"></a>
                       </li>
                       <li class="">
-                        <a href="#lB" data-toggle="tab">Vendedores<br><img src="{{ STATIC_URL }}img/vendedor.png"></a>
+                        <a href="#vendedores" data-toggle="tab">Vendedores<br><img src="{{ STATIC_URL }}img/vendedor.png"></a>
                       </li>
                       <li class="">
-                        <a href="#lC" data-toggle="tab">Compradores<br><img src="{{ STATIC_URL }}img/comprador.png"></a>
+                        <a href="#compradores" data-toggle="tab">Compradores<br><img src="{{ STATIC_URL }}img/comprador.png"></a>
                       </li>
                   </ul>
               <div class="tab-content">
-                  <div class="tab-pane active" id="lA">
-                      <p>Prodcutos</p>
+                  <div class="tab-pane active" id="productos-frescos">
+                      <div class="melonhtml5_tab">
+                          <div class="menu">
+                              <!-- los thumbs deben ser 60px x 60px -->
+                              <a href="#" class="active">
+                                <img src="{{ STATIC_URL }}img/maizthumb.png" class="img-circle"><br>Maiz
+                              </a>
+                              <a href="#" >
+                                <img src="{{ STATIC_URL }}img/arrozthumb.png" class="img-circle"><br>Arroz
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/frijolthumb.png" class="img-circle"><br>Frijol
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/sorgothumb.png" class="img-circle"><br>Sorgo
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/tomatethumb.png" class="img-circle"><br>Tomate
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/chiltomathumb.png" class="img-circle"><br>Chiltoma
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/cebollathumb.png" class="img-circle"><br>Cebolla
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/ajothumb.png" class="img-circle"><br>Ajo
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/papathumb.png" class="img-circle"><br>Papa
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/malangathumb.png" class="img-circle"><br>Malanga
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/yucathumb.png" class="img-circle"><br>Yuca
+                              </a>
+                          </div>
+                          <div class="main">
+                              <div class="tab-subcontent">
+                                  <div class="destacado">
+                                    Precio promedio del año <span class="valor">C$450.9</span> x quintal
+                                  </div>
+                                  <div id="container" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                                  <br>
+                                  <div id="container2" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                              </div>
+                              <div class="tab-subcontent">arroz</div>
+                              <div class="tab-subcontent">frijol</div>
+                              <div class="tab-subcontent">sorgo</div>
+                              <div class="tab-subcontent">tomate</div>
+                              <div class="tab-subcontent">chiltoma</div>
+                              <div class="tab-subcontent">cebolla</div>
+                              <div class="tab-subcontent">Ajo</div>
+                              <div class="tab-subcontent">Papa</div>
+                              <div class="tab-subcontent">Malanga</div>
+                              <div class="tab-subcontent">Yuca</div>
+                          </div>
+                      </div>
                   </div>
-                  <div class="tab-pane" id="lB">
-                      <p>vendedores</p>
+                  <div class="tab-pane active" id="productos-procesados">
+                      <div class="melonhtml5_tab">
+                          <div class="menu">
+                              <!-- los thumbs deben ser 60px x 60px -->
+                              <a href="#" class="active">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Queso
+                              </a>
+                              <a href="#" >
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Pan
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Pinol
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cuajada
+                              </a>
+                              <a href="#" >
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Galleta
+                              </a>
+                              <a href="#" >
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cosa de horno
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cafe
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Chocolate
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cajeta
+                              </a>
+                              <a href="#">
+                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Nacatamal
+                              </a>
+                          </div>
+                          <div class="main">
+                              <div class="tab-subcontent">Queso</div>
+                              <div class="tab-subcontent">Pan</div>
+                              <div class="tab-subcontent">Pinol</div>
+                              <div class="tab-subcontent">Cuajada</div>
+                              <div class="tab-subcontent">Galleta</div>
+                              <div class="tab-subcontent">Cosa de horno</div>
+                              <div class="tab-subcontent">Cafe</div>
+                              <div class="tab-subcontent">Chocolate</div>
+                              <div class="tab-subcontent">Cajeta</div>
+                              <div class="tab-subcontent">Nacatamal</div>
+                          </div>
+                      </div>
                   </div>
-                  <div class="tab-pane" id="lC">
-                     <p>compradores</p>
+                  <div class="tab-pane" id="vendedores">
+                     <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>Dic 2012</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">34</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">54</div></td>
+                          </tr>
+                          <tr>
+                            <td>Feb 2013</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">24</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">15</div></td>
+                          </tr>
+                          <tr>
+                            <td>Jun 2013</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">10</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">22</div></td>
+                          </tr>
+                          <tr>
+                            <td>Ene 2014</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">13</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">14</div></td>
+                          </tr>
+                        </tbody>
+                     </table>
                   </div>
+                  <div class="tab-pane" id="compradores">
+                     <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>Dic 2012</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">180</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">200</div></td>
+                          </tr>
+                          <tr>
+                            <td>Feb 2013</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">240</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">150</div></td>
+                          </tr>
+                          <tr>
+                            <td>Jun 2013</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">100</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">220</div></td>
+                          </tr>
+                          <tr>
+                            <td>Ene 2014</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">130</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">140</div></td>
+                          </tr>
+                        </tbody>
+                     </table>
+                  </div>
+
               </div>
-              
+              <div class="sombra"></div>
+              <div class="sombra2"></div>
           </div>
         </div>
       </div> <!-- /container -->
