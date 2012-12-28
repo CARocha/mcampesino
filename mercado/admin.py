@@ -2,7 +2,14 @@ from django.contrib import admin
 from autocomplete.widgets import *
 from mercado.models import *
 from mercado.forms import *
+from django.forms.models import BaseInlineFormSet
 
+class MyFormSet(BaseInlineFormSet):
+    def get_queryset(self):
+        if not hasattr(self, '_queryset'):
+            qs = super(MyFormSet, self).get_queryset().filter(calidad=True)
+            self._queryset = qs
+        return self._queryset
 
 class RegistroMercadoInline(admin.StackedInline):
 	model = RegistroMercado
@@ -44,30 +51,33 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
 
 admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
+numero_fresco = ProductosFrescos.objects.all().count()
+numero_procesados = ProductosProcesados.objects.all().count()
+lista = [{'producto_fresco':u'caramelo','producto_fresco':u'nose',}]
 
-class MovimientoProductosFrescoInline(admin.StackedInline):
+class MovimientoProductosFrescoInline(admin.TabularInline):
     model = MovimientoProductosFresco
-    form = MovimientoProductosFrescoForm
-    template = 'mercado/admin/stacked.html'
+    formset = MyFormSet
+    #template = 'mercado/admin/tabular.html'
     fieldsets = (
             (None, {
-                'fields': ((('producto_fresco'),
-                ('volumen_venta_global','precio_promedio',
-                'precio_municipal','calidad')))
+                'fields': (('producto_fresco',
+                'volumen_venta_global','precio_promedio',
+                'precio_municipal','calidad'),)
         }),
     )
-    extra = 1
+    extra = numero_fresco
 
-class MovimientoProductosProcesadosInline(admin.StackedInline):
+class MovimientoProductosProcesadosInline(admin.TabularInline):
     model = MovimientoProductosProcesados
     fieldsets = (
             (None, {
-                'fields': ((('fkproducto_fresco'),
-                ('volumen_venta_global','precio_promedio',
-                'precio_municipal','calidad')))
+                'fields': (('fkproducto_fresco',
+                'volumen_venta_global','precio_promedio',
+                'precio_municipal','calidad'),)
         }),
     )
-    extra = 1
+    extra = numero_procesados
 
 class MovimientoAdmin(AutocompleteModelAdmin):
     search_fields = ['__unicode__']

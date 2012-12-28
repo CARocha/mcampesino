@@ -2,8 +2,12 @@
 from django.db import models
 from lugar.models import Comunidad, Departamento, Municipio, Pais
 from smart_selects.db_fields import ChainedForeignKey
+import os
+from thumbs import ImageWithThumbsField
 
 # Create your models here.
+def get_file_path(intance,filename):
+	return os.path.join(intance.fileDir, filename)
 
 class Registro(models.Model):
 	fecha_registro = models.DateField('Fecha de registro')
@@ -46,13 +50,28 @@ class RegistroMercado(models.Model):
 		show_all=False,
 		auto_choose=True
     )
+	descripcion = models.TextField(null=True, blank=True)
 
 	class Meta:
 		verbose_name=u'Registro mercado'
 		verbose_name_plural=u'Registro de mercados'
 
+	def foto(self):
+		atach = Fotos.objects.filter(fk_mercado__id=self.id)
+		return atach
+
 	def __unicode__(self):
 		return self.nombre_mercado
+
+class Fotos(models.Model):
+	nombre = models.CharField(max_length=150)
+	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((460,260),(200,200)))
+
+	fk_mercado = models.ForeignKey(RegistroMercado)
+	fileDir = 'fotosmercados/'
+
+	def __unicode__(self):
+		return self.nombre
 
 class PersonaContacto(models.Model):
 	nombre = models.CharField(max_length=200)
@@ -108,6 +127,9 @@ class ApoyanMercado(models.Model):
 
 class ProductosFrescos(models.Model):
 	nombre = models.CharField(max_length=200)
+	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((60,60),(200,200)))
+
+	fileDir = 'fresco/'
 
 	class Meta:
 		verbose_name_plural = 'Productos frescos'
@@ -117,6 +139,9 @@ class ProductosFrescos(models.Model):
 
 class ProductosProcesados(models.Model):
 	nombre = models.CharField(max_length=200)
+	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((60,60),(200,200)))
+
+	fileDir = 'procesados/'
 
 	class Meta:
 		verbose_name_plural = 'Productos procesados'

@@ -1,34 +1,30 @@
 from django.forms import ModelForm
 from django import forms
 from mercado.models import *
+from django.forms.formsets import formset_factory
+from django.forms.models import inlineformset_factory
+from django.forms.models import BaseModelFormSet
+from django.forms.models import modelformset_factory
 
+
+class BaseFrescoFormSet(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        self.queryset = ProductosFrescos.objects.all()
+        super(BaseFrescoFormSet, self).__init__(*args, **kwargs)
 
 class ActividadForm(forms.ModelForm):
     
 	class Meta:
 		model = ActividadMercado
 
-#MovimiendotFormset = forms.models.inlineformset_factory(MovimientoProductosFresco,MovimientoProductosProcesados)
 class MovimientoProductosFrescoForm(forms.ModelForm):
-	# def __init__(self, **kwargs):
-	# 	super(MovimientoProductosFrescoForm, self).__init__(**kwargs)
-	# 	self.movimiento_forset = MovimiendotFormset(instance=self.instance, data=self.data,
-	# 		prefix=self.prefix)
-
-	# def is_valid(self):
-	# 	return (super(MovimientoProductosFrescoForm, self).is_valid() and 
-	# 			self.movimiento_forset.is_valid())
-
-	# def save(self, commit=True):
-	# 	assert commit == True 
-	# 	res = super(MovimientoProductosFrescoForm, self).save(commit=commit)
-	# 	self.movimiento_forset.save()
-	# 	return res
 
 	class Meta:
 		model = MovimientoProductosFresco
 		exclude = ('fkmovimiento',)
 
+FrescoFormSet = modelformset_factory(ProductosFrescos, formset=BaseFrescoFormSet)
+formset_fresco = FrescoFormSet(queryset=ProductosFrescos.objects.none())
 # class MovimientoProductosProcesadoForm(forms.ModelForm):
 # 	class Meta:
 # 		model = MovimientoProductosProcesado
