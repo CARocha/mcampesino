@@ -15,11 +15,18 @@ class RegistroMercadoInline(admin.StackedInline):
 	model = RegistroMercado
 	extra = 1
 
+class FotosInline(admin.StackedInline):
+    model = Fotos
+    extra = 1
+
 class RegistroAdmin(admin.ModelAdmin):
 	inlines = [RegistroMercadoInline]
 
+class RegistroMercadoAdmin(admin.ModelAdmin):
+    inlines = [FotosInline]
+
 admin.site.register(Registro, RegistroAdmin)
-admin.site.register(RegistroMercado)
+admin.site.register(RegistroMercado, RegistroMercadoAdmin)
 admin.site.register(PersonaContacto)
 admin.site.register(TipoOrganizacion)
 admin.site.register(Periodicidad)
@@ -27,6 +34,7 @@ admin.site.register(TiposOrganizacionesApoyan)
 admin.site.register(ApoyanMercado)
 admin.site.register(ProductosFrescos)
 admin.site.register(ProductosProcesados)
+admin.site.register(Fotos)
 
 class ActividadMercadoAdmin(admin.ModelAdmin):
 	filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')

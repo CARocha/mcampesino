@@ -2,8 +2,11 @@
 from django.db import models
 from lugar.models import Comunidad, Departamento, Municipio, Pais
 from smart_selects.db_fields import ChainedForeignKey
+from south.modelsinspector import add_introspection_rules
 import os
 from thumbs import ImageWithThumbsField
+
+#add_introspection_rules([], ["^thumbs\.ImageWithThumbsField"])
 
 # Create your models here.
 def get_file_path(intance,filename):
@@ -65,7 +68,9 @@ class RegistroMercado(models.Model):
 
 class Fotos(models.Model):
 	nombre = models.CharField(max_length=150)
-	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((460,260),(200,200)))
+	picture = ImageWithThumbsField(upload_to=get_file_path,
+		                           sizes=((460,260),(200,200)),
+		                           null=True, blank=True)
 
 	fk_mercado = models.ForeignKey(RegistroMercado)
 	fileDir = 'fotosmercados/'
@@ -127,7 +132,9 @@ class ApoyanMercado(models.Model):
 
 class ProductosFrescos(models.Model):
 	nombre = models.CharField(max_length=200)
-	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((60,60),(200,200)))
+	picture = ImageWithThumbsField(upload_to=get_file_path,
+		                            sizes=((60,60),(200,200)),
+		                            null=True, blank=True)
 
 	fileDir = 'fresco/'
 
@@ -139,7 +146,9 @@ class ProductosFrescos(models.Model):
 
 class ProductosProcesados(models.Model):
 	nombre = models.CharField(max_length=200)
-	picture = ImageWithThumbsField(upload_to=get_file_path,sizes=((60,60),(200,200)))
+	picture = ImageWithThumbsField(upload_to=get_file_path,
+		                           sizes=((60,60),(200,200)),
+		                           null=True, blank=True)
 
 	fileDir = 'procesados/'
 
