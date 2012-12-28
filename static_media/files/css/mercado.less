@@ -27,7 +27,7 @@ p{
 
 /* Header */
 
-.top{
+.header{
   height: 442px;
   .linear-gradient(#fc971a,#f53916,10%);
   .banner{
@@ -66,14 +66,17 @@ p{
 
 .fixed{
   .linear-gradient(#f57d27,#f53916,5%);
-  position: fixed;
   top:0;
   z-index: 999;
+  position: absolute;
   width: 100%;
   height: 100px;
   .logo{
     margin-top:0px;
     float: left;
+  }
+  .titulo .titulo-main{
+
   }
 }
 
@@ -305,8 +308,9 @@ p{
 }
 
 .mercado .titulo-main {
-  float: left;
-  margin-left: 100px;
+  // float: left;
+  // margin-left: 100px;
+  text-align: center;
 }
 
 .ficha-descripcion{
@@ -342,12 +346,93 @@ p{
 
 .productos{
   background: #e8e8e8;
+  .tabbable{
+    margin-top: 20px;
+    .nav li a{
+      text-align: center;
+      margin-right: -2px;
+      color:#888a85;
+      &:hover{
+        color:#000;
+      }
+      img{
+        margin-top:8px;
+      }
+    }
+    .active a{
+      color:#f72b0e !important;
+    }
+  }
   .tab-content{
     background: #fff;
+    min-height: 350px;
+    border:#DDDDDD 1px solid;
+    padding:15px;
   }
   .nav-tabs{
     margin-right: 0px;
   }
+}
+
+.destacado{
+  text-align:center;
+  margin-bottom: 10px;
+  color:#878181;
+  padding-right: 15px;
+  .valor{
+    color:#a5c76c;
+    font-size: 25px;
+    font-weight: bold;
+  }
+}
+
+.sombra{
+  float: right;
+  height: 4px;
+  border-bottom:#ddd 1px solid;
+  border-left:#ddd 1px solid;
+  border-right:#ddd 1px solid;
+  background: #fff;
+  margin-right: 8px;
+  width: 765px;
+}
+.sombra2{
+  float: right;
+  height: 3px;
+  border-bottom:#ddd 1px solid;
+  border-left:#ddd 1px solid;
+  border-right:#ddd 1px solid;
+  background: #fff;
+  margin-right: 15px;
+  width: 750px;
+  margin-bottom: 20px;
+}
+
+div.melonhtml5_tab > div.menu.top span.shortcut{display: none !important;}
+div.melonhtml5_tab > div.menu a img{
+  .box-double-shadow(0px,0px,0px,4px,#fff,0px,4px,7px,0px,#aaada7);
+  margin-bottom: 3px;
+}
+.melonhtml5_tab .main .tab-subcontent{
+  padding-top:120px;
+}
+
+.highcharts-title tspan{
+  color:#000 !important;
+}
+
+.sexom,.sexof{
+  .rounded-corners(100px);
+  padding:8px;
+  width: 55px;
+}
+
+.sexom{
+  background: #d6ecee;
+}
+
+.sexof{
+  background: #eee1de;
 }
 
 .footer{
