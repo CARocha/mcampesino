@@ -65,8 +65,13 @@ lista = [{'producto_fresco':u'caramelo','producto_fresco':u'nose',}]
 
 class MovimientoProductosFrescoInline(admin.TabularInline):
     model = MovimientoProductosFresco
-    formset = MyFormSet
-    #template = 'mercado/admin/tabular.html'
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        for producto in ProductosFrescos.objects.all():
+            if db_field.name == 'producto_fresco':
+                kwargs['initial'] = producto.nombre #request.GET.get('producto_fresco', '')
+                return super(MovimientoProductosFrescoInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
     fieldsets = (
             (None, {
                 'fields': (('producto_fresco',
