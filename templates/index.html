@@ -68,76 +68,25 @@
           <div class="row">
             <div class="span12">
 
+              {% for mercado in mercados  %}
                 <div class="mercado-elemento">
                   <center>
                     <a href="#">
-                      <span class="badge badge-important">Matagalpa</span>
+                      <span class="badge badge-important">{{mercado.departamento}}</span>
                     </a>
                   </center>
-                  <a href="#" class="mercado">
-                    <img class="imagen-mercado" src="{{ STATIC_URL }}img/mercado.png" alt="" />
-                    <div class="titulo-mercado">Mercado campesino Siuna</div>
+                  <a href="ver_mercado/{{mercado.id}}" class="mercado"> 
+                      <img class="imagen-mercado" src="{{mercado.foto.0.picture.url_460x260}}" alt="{{mercado.nombre_mercado}}" />
+                    <div class="titulo-mercado">{{mercado.nombre_mercado}}</div>
                   </a>
                   <center>
                      <div class="sombra-mercado"></div>
                   </center>
                 </div>
-                <div class="mercado-elemento">
-                  <center>
-                    <a href="#">
-                      <span class="badge badge-important">Chinandega</span>
-                    </a>
-                  </center>
-                  <a href="#" class="mercado">
-                    <img class="imagen-mercado" src="{{ STATIC_URL }}img/mercado.png" alt="" />
-                    <div class="titulo-mercado">Mercado campesino Siuna</div>
-                  </a>
-                  <center>
-                     <div class="sombra-mercado"></div>
-                  </center>
-                </div>
-                <div class="mercado-elemento">
-                  <center>
-                    <a href="#">
-                      <span class="badge badge-important">Rivas</span>
-                    </a>
-                  </center>
-                  <a href="#" class="mercado">
-                    <img class="imagen-mercado" src="{{ STATIC_URL }}img/mercado.png" alt="" />
-                    <div class="titulo-mercado">Mercado campesino Siuna</div>
-                  </a>
-                  <center>
-                     <div class="sombra-mercado"></div>
-                  </center>
-                </div>
-                <div class="mercado-elemento">
-                  <center>
-                    <a href="#">
-                      <span class="badge badge-important">RAAS</span>
-                    </a>
-                  </center>
-                  <a href="#" class="mercado">
-                    <img class="imagen-mercado" src="{{ STATIC_URL }}img/mercado.png" alt="" />
-                    <div class="titulo-mercado">Mercado campesino Siuna</div>
-                  </a>
-                  <center>
-                     <div class="sombra-mercado"></div>
-                  </center>
-                </div>
-                <div class="mercado-elemento">
-                  <center>
-                    <a href="#">
-                      <span class="badge badge-important">Boaco</span>
-                    </a>
-                  </center>
-                  <a href="#" class="mercado">
-                    <img class="imagen-mercado" src="{{ STATIC_URL }}img/mercado.png" alt="" />
-                    <div class="titulo-mercado">Mercado campesino Siuna</div>
-                  </a>
-                  <center>
-                     <div class="sombra-mercado"></div>
-                  </center>
-                </div>
+                
+              {% empty %}
+                  <p>No existen mercados registrados</p>
+              {% endfor %}
 
             </div>
           </div>

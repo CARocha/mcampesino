@@ -179,7 +179,7 @@ $(function () {
         <div class="row">
           <div class="span12">
            <!-- <a href="/explora/" class="regresar">← Regresar</a>-->
-            <div class="titulo-main">Mercado Campesino Siuna</div>
+            <div class="titulo-main">{{mercado.nombre_mercado}}</div>
           </div>
         </div>
       </div> <!-- /container -->
@@ -191,15 +191,17 @@ $(function () {
           <div class="span6">
             <div class="titulo-descripcion"><i class="icon-star"></i> &nbsp;DESCRIPCION</div>
             <div class="descripcion-mercado">
-              <p>Donec sed odio dui. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              <p>{{mercado.descripcion}}.</p>
             </div>
           </div>
           <div class="span6">
               <div id="myCarousel" class="carousel slide">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
-                  <div class="active item"><img src="{{ STATIC_URL }}img/fotocarrusel1.png"></div>
-                  <div class="item"><img src="{{ STATIC_URL }}img/fotocarrusel2.png"></div>
+                  <div class="active item"><img src="{{mercado.foto.0.picture.url_460x260}}"></div>
+                  {% for fotito in mercado.foto.all %}
+                    <div class="item"><img src="{{fotito.picture.url_460x260}}"></div>
+                  {% endfor %}
                 </div>
                 <!-- Carousel nav -->
                 <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
@@ -214,7 +216,7 @@ $(function () {
       <div class="container">
         <div class="row">
           <div class="span12">
-            <b>Departamento</b> RAAS &nbsp;|&nbsp; <b>Municipio</b> Siuna &nbsp;|&nbsp; <b>Periocidad</b> Mensualmente &nbsp;|&nbsp; <b>Contacto</b> Martha Olivera 86635944 &nbsp;|&nbsp; <b>Organizacion</b> Cooperativa &nbsp;|&nbsp; <b>Modalidad</b> Mercado
+            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b> {% for periodo in mercado.actividadmercado_set.all %} {{periodo.periodicidad}} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organizacion</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {{periodo.get_modalidad_display}} {%endfor%}
           </div>
         </div>
       </div> <!-- /container -->
@@ -243,59 +245,23 @@ $(function () {
                       <div class="melonhtml5_tab">
                           <div class="menu">
                               <!-- los thumbs deben ser 60px x 60px -->
-                              <a href="#" class="active">
-                                <img src="{{ STATIC_URL }}img/maizthumb.png" class="img-circle"><br>Maiz
+                              {% for fresco in productos_frescos %}
+                                <a href="#">
+                                <img src="{{fresco.picture.url_60x60}}" class="img-circle"><br>{{fresco.nombre}}
                               </a>
-                              <a href="#" >
-                                <img src="{{ STATIC_URL }}img/arrozthumb.png" class="img-circle"><br>Arroz
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/frijolthumb.png" class="img-circle"><br>Frijol
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/sorgothumb.png" class="img-circle"><br>Sorgo
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/tomatethumb.png" class="img-circle"><br>Tomate
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/chiltomathumb.png" class="img-circle"><br>Chiltoma
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/cebollathumb.png" class="img-circle"><br>Cebolla
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/ajothumb.png" class="img-circle"><br>Ajo
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/papathumb.png" class="img-circle"><br>Papa
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/malangathumb.png" class="img-circle"><br>Malanga
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/yucathumb.png" class="img-circle"><br>Yuca
-                              </a>
+                              {% endfor %}
                           </div>
                           <div class="main">
-                              <div class="tab-subcontent">
-                                  <div class="destacado">
+                            {% for cosas in productos_frescos %}
+                              <div class="tab-subcontent">{{cosas.nombre}}
+                                  <div>
                                     Precio promedio del año <span class="valor">C$450.9</span> x quintal
                                   </div>
                                   <div id="container" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                                   <br>
                                   <div id="container2" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                               </div>
-                              <div class="tab-subcontent">arroz</div>
-                              <div class="tab-subcontent">frijol</div>
-                              <div class="tab-subcontent">sorgo</div>
-                              <div class="tab-subcontent">tomate</div>
-                              <div class="tab-subcontent">chiltoma</div>
-                              <div class="tab-subcontent">cebolla</div>
-                              <div class="tab-subcontent">Ajo</div>
-                              <div class="tab-subcontent">Papa</div>
-                              <div class="tab-subcontent">Malanga</div>
-                              <div class="tab-subcontent">Yuca</div>
+                            {% endfor %}
                           </div>
                       </div>
                   </div>
@@ -303,48 +269,17 @@ $(function () {
                       <div class="melonhtml5_tab">
                           <div class="menu">
                               <!-- los thumbs deben ser 60px x 60px -->
-                              <a href="#" class="active">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Queso
+                              {% for procesado in productos_procesados %}
+                                <a href="#">
+                                <img src="{{procesado.picture.url_60x60}}" class="img-circle"><br>{{procesado.nombre}}
                               </a>
-                              <a href="#" >
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Pan
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Pinol
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cuajada
-                              </a>
-                              <a href="#" >
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Galleta
-                              </a>
-                              <a href="#" >
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cosa de horno
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cafe
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Chocolate
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Cajeta
-                              </a>
-                              <a href="#">
-                                <img src="{{ STATIC_URL }}img/nofoto.png" class="img-circle"><br>Nacatamal
-                              </a>
+                              {% endfor %}
                           </div>
                           <div class="main">
-                              <div class="tab-subcontent">Queso</div>
-                              <div class="tab-subcontent">Pan</div>
-                              <div class="tab-subcontent">Pinol</div>
-                              <div class="tab-subcontent">Cuajada</div>
-                              <div class="tab-subcontent">Galleta</div>
-                              <div class="tab-subcontent">Cosa de horno</div>
-                              <div class="tab-subcontent">Cafe</div>
-                              <div class="tab-subcontent">Chocolate</div>
-                              <div class="tab-subcontent">Cajeta</div>
-                              <div class="tab-subcontent">Nacatamal</div>
+                            {% for cosas in productos_procesados %}
+                              <div class="tab-subcontent">{{cosas.nombre}}
+                                que norte</div>
+                            {% endfor %}
                           </div>
                       </div>
                   </div>
@@ -358,26 +293,19 @@ $(function () {
                           </tr>
                           </thead>
                         <tbody>
+                        {% for tabla in mercado.actividadmercado_set.all %}
                           <tr>
-                            <td>Dic 2012</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">34</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">54</div></td>
+                            <td>{{tabla.fecha_actividad}}</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">{{tabla.vendedor_hombre}}</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">{{tabla.vendedor_mujer}}</div></td>
                           </tr>
+                        {%empty%}
                           <tr>
-                            <td>Feb 2013</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">24</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">15</div></td>
+                            <td>No existe datos</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">0</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">0</div></td>
                           </tr>
-                          <tr>
-                            <td>Jun 2013</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">10</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">22</div></td>
-                          </tr>
-                          <tr>
-                            <td>Ene 2014</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">13</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">14</div></td>
-                          </tr>
+                        {% endfor %}
                         </tbody>
                      </table>
                   </div>
@@ -391,26 +319,19 @@ $(function () {
                           </tr>
                           </thead>
                         <tbody>
+                          {% for tabla in mercado.actividadmercado_set.all %}
                           <tr>
-                            <td>Dic 2012</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">180</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">200</div></td>
+                            <td>{{tabla.fecha_actividad}}</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">{{tabla.comprador_hombre}}</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">{{tabla.comprador_mujer}}</div></td>
                           </tr>
+                        {%empty%}
                           <tr>
-                            <td>Feb 2013</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">240</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">150</div></td>
+                            <td>No existe datos</td>
+                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">0</div></td>
+                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">0</div></td>
                           </tr>
-                          <tr>
-                            <td>Jun 2013</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">100</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">220</div></td>
-                          </tr>
-                          <tr>
-                            <td>Ene 2014</td>
-                            <td><div class="sexom"><img src="{{ STATIC_URL }}img/male.png">130</div></td>
-                            <td><div class="sexof"><img src="{{ STATIC_URL }}img/female.png">140</div></td>
-                          </tr>
+                        {% endfor %}
                         </tbody>
                      </table>
                   </div>

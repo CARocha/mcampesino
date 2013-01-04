@@ -61,16 +61,15 @@ admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
 numero_fresco = ProductosFrescos.objects.all().count()
 numero_procesados = ProductosProcesados.objects.all().count()
-lista = [{'producto_fresco':u'caramelo','producto_fresco':u'nose',}]
 
 class MovimientoProductosFrescoInline(admin.TabularInline):
     model = MovimientoProductosFresco
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        for producto in ProductosFrescos.objects.all():
-            if db_field.name == 'producto_fresco':
-                kwargs['initial'] = producto.nombre #request.GET.get('producto_fresco', '')
-                return super(MovimientoProductosFrescoInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     for producto in ProductosFrescos.objects.all():
+    #         if db_field.name == 'producto_fresco':
+    #             kwargs['initial'] = [{'producto_fresco': producto.nombre}] #request.GET.get('producto_fresco', '')
+    #         return super(MovimientoProductosFrescoInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
     fieldsets = (
             (None, {
