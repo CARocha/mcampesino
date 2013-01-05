@@ -45,34 +45,14 @@
           </div>
           <div class="span10">
             <div class="mapa">
-              <form class="form-inline">
-                
+              <form class="form-inline" action="." method="POST">
+                {%csrf_token%}
                 <div class="selects">
-                  <select>
-                    <option>Organizacion</option>
-                    <option>Libre</option>
-                    <option>Cooperativa</option>
-                    <option>Organizacion comunitaria</option>
-                    <option>Asociacion</option>
-                    <option>Empresa pyme</option>
-                  </select>
-                  <select>
-                    <option>Periocidad</option>
-                    <option>Diario</option>
-                    <option>Semanal</option>
-                    <option>Quincenal</option>
-                    <option>Mensual</option>
-                  </select>
-                  <select >
-                    <option>Product. procesados</option>
-                    <option>miel</option>
-                    <option>cafe tostado</option>
-                  </select>
-                  <select class="last">
-                    <option>Product. frescos</option>
-                    <option>maiz</option>
-                    <option>frijol</option>
-                  </select>
+                  {{form.tipo_organizacion_mercado}}<br>{{form.tipo_organizacion_mercado.errors}}
+                  {{form.periodicidad}}<br>{{form.periodicidad.errors}}
+                  {{form.productos_procesados}}<br>{{form.productos_procesados.errors}}
+                  {{form.productos_frescos}}<br>{{form.productos_frescos.errors}}
+                  
                </div>  
                <button type="submit" class="boton">Actualizar</button>
               </form>

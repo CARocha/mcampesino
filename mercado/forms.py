@@ -6,10 +6,21 @@ from django.forms.models import inlineformset_factory
 from django.forms.models import BaseModelFormSet
 from django.forms.models import modelformset_factory
 
-class ActividadForm(forms.ModelForm):
-    
+
+
+
+class ActividadForm(forms.Form):
+	tipo_organizacion_mercado = forms.ModelChoiceField(queryset=TipoOrganizacion.objects.all(),
+    	                                               required=False, label="Organizacion")
+	periodicidad = forms.ModelChoiceField(queryset=Periodicidad.objects.all(),
+    									  required=False, label="periodicidad")
+	productos_procesados = forms.ModelChoiceField(queryset=ProductosProcesados.objects.all(),
+    											  required=False, label="produc. procesados")
+	productos_frescos = forms.ModelChoiceField(queryset=ProductosFrescos.objects.all(),
+    										   required=False, label="produc. frescos")
 	class Meta:
 		model = ActividadMercado
+		#fields = ('tipo_organizacion_mercado','periodicidad','productos_procesados','productos_frescos')
 
 
 
