@@ -59,8 +59,6 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
 
 admin.site.register(ActividadMercado, ActividadMercadoAdmin)
 
-numero_fresco = ProductosFrescos.objects.all().count()
-numero_procesados = ProductosProcesados.objects.all().count()
 
 class MovimientoProductosFrescoInline(admin.TabularInline):
     model = MovimientoProductosFresco
@@ -78,7 +76,7 @@ class MovimientoProductosFrescoInline(admin.TabularInline):
                 'precio_municipal','calidad'),)
         }),
     )
-    extra = numero_fresco
+    
 
 class MovimientoProductosProcesadosInline(admin.TabularInline):
     model = MovimientoProductosProcesados
@@ -89,7 +87,7 @@ class MovimientoProductosProcesadosInline(admin.TabularInline):
                 'precio_municipal','calidad'),)
         }),
     )
-    extra = numero_procesados
+    
 
 class MovimientoAdmin(AutocompleteModelAdmin):
     search_fields = ['__unicode__']

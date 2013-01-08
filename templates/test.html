@@ -1,6 +1,13 @@
-{{form1.as_p}}
 
+<form method="post" action="">
+{{form1.as_ul}}
+<hr>
 {{ form.management_form }}
+<table>
 {% for nose  in form %}
-	{{nose.as_ul}}
+	{{nose}}
 {% endfor %}
+</table>
+
+
+</form>

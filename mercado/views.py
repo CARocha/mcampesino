@@ -11,22 +11,24 @@ from django.forms.models import inlineformset_factory
 def multipleform(request):
 	lista_inicial = []
 	for producto in ProductosFrescos.objects.all():
-		lista_inicial.append({'producto_fresco':str(producto.nombre),})
-	FrescoFormSet = inlineformset_factory(Movimiento, MovimientoProductosFresco)
-	
+		lista_inicial.append({'producto_fresco':producto.id,'volumen_venta_global':0.0,
+			                   'precio_promedio':0.0,'precio_municipal':0.0})
+	FrescoFormSet = formset_factory(MovimientoProductosFrescoForm, 
+		                            extra=len(lista_inicial), 
+		                            max_num=len(lista_inicial))
+	formset = FrescoFormSet(initial=lista_inicial)
 	if request.method == 'POST':
-		form = FrescoFormSet(request.POST, request.FILES)
+		form = formset(request.POST)
 		form1 = MovimientoForm(request.POST)
-		if form.is_valid() and form1.is_valid():
-			form.save()
+		if formset.is_valid() and form1.is_valid():
 			form1.save()
-
+			form.save()	
 	else:
-		form = FrescoFormSet()
+		formset = FrescoFormSet(initial=lista_inicial)
 		form1 = MovimientoForm()
 		
 
-	return render_to_response('test.html', {'form1':form1,'form':form},
+	return render_to_response('test.html', {'form1':form1,'form':formset},
 							  context_instance=RequestContext(request))
 
 
