@@ -23,6 +23,10 @@ class ActividadForm(forms.Form):
 		#fields = ('tipo_organizacion_mercado','periodicidad','productos_procesados','productos_frescos')
 
 
+class MovimientoForm(forms.ModelForm):
+	class Meta:
+		model = Movimiento
+
 
 class MovimientoProductosFrescoForm(forms.ModelForm):
 	lista_inicial = []

@@ -4,6 +4,30 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from mercado.models import *
 from mercado.forms import *
+from django.forms.models import modelformset_factory
+from django.forms.formsets import formset_factory, BaseFormSet
+from django.forms.models import inlineformset_factory
+
+def multipleform(request):
+	lista_inicial = []
+	for producto in ProductosFrescos.objects.all():
+		lista_inicial.append({'producto_fresco':str(producto.nombre),})
+	FrescoFormSet = inlineformset_factory(Movimiento, MovimientoProductosFresco)
+	
+	if request.method == 'POST':
+		form = FrescoFormSet(request.POST, request.FILES)
+		form1 = MovimientoForm(request.POST)
+		if form.is_valid() and form1.is_valid():
+			form.save()
+			form1.save()
+
+	else:
+		form = FrescoFormSet()
+		form1 = MovimientoForm()
+		
+
+	return render_to_response('test.html', {'form1':form1,'form':form},
+							  context_instance=RequestContext(request))
 
 
 def index(request):
