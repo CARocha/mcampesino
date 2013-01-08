@@ -1,13 +1,14 @@
+{% extends "base_solo_index.html" %}
 
-<form method="post" action="">
-{{form1.as_ul}}
-<hr>
-{{ form.management_form }}
-<table>
-{% for nose  in form %}
-	{{nose}}
-{% endfor %}
-</table>
-
-
+{% block content %}
+	<form action="" method="post">
+		{% csrf_token %}
+		{{ formMer.as_p }}
+	<p>Productos frescos</p>
+	<div id="forms"></div>
+	<p>Productos procesados</p>
+	<div id="forms"></div>
+    <input type="submit">
 </form>
+{% endblock content %}
+
