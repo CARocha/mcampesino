@@ -11,10 +11,10 @@ def reqdata(request):
     mensaje = ''
     if request.is_ajax() and request.method == 'POST':
         productosfrescos = ProductosFrescos.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
-        #productosprocedados = ProductosProcesados.objects.filter(actividadmercado__fkmercado__nombre_mercado=request.POST['mercado'])
+        productosprocedados = ProductosProcesados.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
         prod1 = {x.id:x.nombre for x in productosfrescos}
-        #prod2 = {x.id:x.nombre for x in productosprocedados}
-        mensaje = json.dumps(dict(productos=prod1))
+        prod2 = {x.id:x.nombre for x in productosprocedados}
+        mensaje = json.dumps(dict(productos=prod1,procesado=prod2))
     return HttpResponse(mensaje)
 
 def multipleform(request):
@@ -36,18 +36,31 @@ def multipleform(request):
 	# 	formset = FrescoFormSet(initial=lista_inicial)
 	# 	form1 = MovimientoForm()
 	if request.method == 'POST':
-		for prod in ProductosFrescos.objects.all():
-			producto = request.POST.get('product-'+str(prod.id), None)
-			cantidad = request.POST.get('cant-'+str(prod.id), None)
-			if producto and cantidad:
-				mov = MovimientoProducto.objects.create(
-                    mercado=Mercado.objects.get(pk=request.POST['mercado']),
-                    producto = Producto.objects.get(pk=prod.id),
-                    cantidad = cantidad
-                )
-				mov.save()
+		formMer = MovimientoForm(request.POST)
 
-	formMer = MercadoForm()
+
+		if formMer.is_valid():
+			form_uncommited = formMer.save(commit=False)
+			form_uncommited.save()
+			for prod in ProductosFrescos.objects.all():
+				producto = request.POST.get('product-'+str(prod.id), None)
+				volumen = request.POST.get('volumen-'+str(prod.id), None)
+				promedio = request.POST.get('promedio-'+str(prod.id), None)
+				municipal = request.POST.get('municipal-'+str(prod.id), None)
+				calidad = request.POST.get('calidad-'+str(prod.id), None)
+				if producto and volumen and promedio and municipal and calidad: 
+					mov = MovimientoProductosFresco.objects.create(
+	                    fkmovimiento=form_uncommited,
+	                    producto_fresco = ProductosFrescos.objects.get(pk=prod.id),
+	                    volumen_venta_global = volumen,
+	                    precio_promedio = promedio,
+	                    precio_municipal = municipal,
+	                    calidad = calidad
+	                )
+					mov.save()
+	else:
+		formMer = MovimientoForm()
+	
 		
 	return render_to_response('test.html', {'formMer':formMer},
 							  context_instance=RequestContext(request))

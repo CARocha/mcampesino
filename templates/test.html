@@ -1,14 +1,20 @@
-{% extends "base_solo_index.html" %}
+{% extends "admin/base_site.html" %}
 
 {% block content %}
 	<form action="" method="post">
 		{% csrf_token %}
-		{{ formMer.as_p }}
-	<p>Productos frescos</p>
-	<div id="forms"></div>
-	<p>Productos procesados</p>
-	<div id="forms"></div>
-    <input type="submit">
-</form>
+		{{ formMer.as_ul }}
+		<p>Productos frescos</p>
+		<div id="forms"></div>
+		<p>Productos procesados</p>
+		<div id="forms2"></div>
+    	<input type="submit">
+	</form>
+
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="{{STATIC_URL}}js/utilitarios.js"></script>
+    <script src="{{STATIC_URL}}js/custom.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.cookie.js"></script>
 {% endblock content %}
 

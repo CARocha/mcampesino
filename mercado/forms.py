@@ -7,9 +7,6 @@ from django.forms.models import BaseModelFormSet
 from django.forms.models import modelformset_factory
 
 
-class MercadoForm(forms.Form):
-	mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
-
 class ActividadForm(forms.Form):
 	tipo_organizacion_mercado = forms.ModelChoiceField(queryset=TipoOrganizacion.objects.all(),
     	                                               required=False, label="Organizacion")
@@ -25,6 +22,7 @@ class ActividadForm(forms.Form):
 
 
 class MovimientoForm(forms.ModelForm):
+	#mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
 	class Meta:
 		model = Movimiento
 
