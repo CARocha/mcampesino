@@ -25,6 +25,7 @@ class MovimientoForm(forms.ModelForm):
 	#mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
 	class Meta:
 		model = Movimiento
+		exclude = ('usuario',)
 
 
 class MovimientoProductosFrescoForm(forms.ModelForm):

@@ -5,6 +5,7 @@ from smart_selects.db_fields import ChainedForeignKey
 from south.modelsinspector import add_introspection_rules
 import os
 from thumbs import ImageWithThumbsField
+from django.contrib.auth.models import User
 
 #add_introspection_rules([], ["^thumbs\.ImageWithThumbsField"])
 
@@ -13,7 +14,8 @@ def get_file_path(intance,filename):
 	return os.path.join(intance.fileDir, filename)
 
 class Registro(models.Model):
-	fecha_registro = models.DateField('Fecha de registro')
+	fecha_registro = models.DateField('Fecha de inicio operacion del mercado')
+	fecha_falguni = models.DateField(auto_now_add=True) #nose para que esta fecha :/
 	nombre_persona = models.CharField('Nombre de persona que registra la informacion'
 		                              , max_length=200)
 	nombre_organizacion = models.CharField('Nombre de organización a que pertenece la persona'
@@ -28,7 +30,7 @@ class Registro(models.Model):
 		return u'%s || %s' % (self.nombre_persona, self.nombre_organizacion)
 
 class RegistroMercado(models.Model):
-	fkregistro = models.ForeignKey(Registro)
+	fkregistro = models.ForeignKey(Registro, verbose_name=u'Persona que registro')
 	nombre_mercado = models.CharField('Nombre del mercado', 
 		                               max_length=200)
 	pais = models.ForeignKey(Pais)
@@ -132,6 +134,7 @@ class ApoyanMercado(models.Model):
 
 class ProductosFrescos(models.Model):
 	nombre = models.CharField(max_length=200)
+	unidad = models.CharField(max_length=15, null=True, blank=True)
 	picture = ImageWithThumbsField(upload_to=get_file_path,
 		                            sizes=((60,60),(200,200)),
 		                            null=True, blank=True)
@@ -142,10 +145,11 @@ class ProductosFrescos(models.Model):
 		verbose_name_plural = 'Productos frescos'
 
 	def __unicode__(self):
-		return self.nombre
+		return u'%s || unidad: %s' % (self.nombre, self.unidad)
 
 class ProductosProcesados(models.Model):
 	nombre = models.CharField(max_length=200)
+	unidad = models.CharField(max_length=15, null=True, blank=True)
 	picture = ImageWithThumbsField(upload_to=get_file_path,
 		                           sizes=((60,60),(200,200)),
 		                           null=True, blank=True)
@@ -156,12 +160,12 @@ class ProductosProcesados(models.Model):
 		verbose_name_plural = 'Productos procesados'
 
 	def __unicode__(self):
-		return self.nombre
+		return u'%s || unidad: %s' % (self.nombre, self.unidad)
 
 
 class ActividadMercado(models.Model):
 	fkmercado = models.ForeignKey(RegistroMercado, verbose_name=u'Mercados')
-	fecha_actividad = models.DateField('Fecha de inicio de la actividad del mercado')
+	fecha_actividad = models.DateField('Fecha actual del estado del mercado')
 	direccion = models.TextField('Dirección física del mercado')
 	persona_contacto = 	models.ForeignKey(PersonaContacto)
 	telefono = models.IntegerField()    
@@ -182,7 +186,7 @@ class ActividadMercado(models.Model):
 	productos_procesados = models.ManyToManyField(ProductosProcesados)
 
 	class Meta:
-		verbose_name_plural = "inicio de actividad del mercado"
+		verbose_name_plural = "Estado actual del mercado"
 
 	def __unicode__(self):
 		return u'mercado: %s - %s' % (self.fkmercado, str(self.fecha_actividad)) 
@@ -198,6 +202,7 @@ class Movimiento(models.Model):
 	organizacion_persona = models.CharField(max_length=200)
 	correo = models.EmailField(null=True, blank=True)
 	telefono = models.IntegerField(null=True, blank=True)
+	usuario = models.ForeignKey(User)
 
 	class Meta:
 		verbose_name_plural = "Movimiento de los productos en el mercado"

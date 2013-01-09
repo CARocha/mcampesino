@@ -1,12 +1,44 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-	<form action="" method="post">
+	<form action="." method="post">
 		{% csrf_token %}
-		{{ formMer.as_ul }}
-		<p>Productos frescos</p>
+		{{ formMer.as_p }}
+		<p id="tablita">Productos frescos</p>
+		<table id="pf">
+			<thead>
+				<tr>
+					<th>Productos frescos</th>
+					<th>Volumen venta en una jornada del mercado</th>
+					<th>Precio promedio del producto en el mercado</th>
+					<th>Precio municipal</th>
+					<th>Calidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					
+				</tr>
+			</tbody>
+		</table>
 		<div id="forms"></div>
-		<p>Productos procesados</p>
+		<p id="pp">Productos procesados</p>
+		<table id="tablita1">
+			<thead>
+				<tr>
+					<th>Producto procesados</th>
+					<th>Volumen venta en una jornada del mercado</th>
+					<th>Precio promedio del producto en el mercado</th>
+					<th>Precio municipal</th>
+					<th>Calidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					
+				</tr>
+			</tbody>
+		</table>
 		<div id="forms2"></div>
     	<input type="submit">
 	</form>

@@ -8,14 +8,14 @@ from mercado.forms import *
 from django.utils import simplejson as json
 
 def reqdata(request):
-    mensaje = ''
-    if request.is_ajax() and request.method == 'POST':
-        productosfrescos = ProductosFrescos.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
-        productosprocedados = ProductosProcesados.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
-        prod1 = {x.id:x.nombre for x in productosfrescos}
-        prod2 = {x.id:x.nombre for x in productosprocedados}
-        mensaje = json.dumps(dict(productos=prod1,procesado=prod2))
-    return HttpResponse(mensaje)
+	mensaje = ''
+	if request.is_ajax() and request.method == 'POST':
+		productosfrescos = ProductosFrescos.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
+		productosprocedados = ProductosProcesados.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
+		prod1 = {x.id:x.nombre for x in productosfrescos}
+		prod2 = {x.id:x.nombre for x in productosprocedados}
+		mensaje = json.dumps(dict(productos=prod1,procesado=prod2))
+	return HttpResponse(mensaje)
 
 def multipleform(request):
 	# lista_inicial = []
@@ -41,6 +41,7 @@ def multipleform(request):
 
 		if formMer.is_valid():
 			form_uncommited = formMer.save(commit=False)
+			form_uncommited.usuario = request.user
 			form_uncommited.save()
 			for prod in ProductosFrescos.objects.all():
 				producto = request.POST.get('product-'+str(prod.id), None)
@@ -58,6 +59,22 @@ def multipleform(request):
 	                    calidad = calidad
 	                )
 					mov.save()
+			for prod in ProductosProcesados.objects.all():
+				productop = request.POST.get('productp-'+str(prod.id), None)
+				volumenp = request.POST.get('volumenp-'+str(prod.id), None)
+				promediop = request.POST.get('promediop-'+str(prod.id), None)
+				municipalp = request.POST.get('municipalp-'+str(prod.id), None)
+				calidadp = request.POST.get('calidadp-'+str(prod.id), None)
+				if productop and volumenp and promediop and municipalp and calidadp: 
+					movp = MovimientoProductosProcesados.objects.create(
+	                    fkmovimiento=form_uncommited,
+	                    fkproducto_fresco = ProductosProcesados.objects.get(pk=prod.id),
+	                    volumen_venta_global = volumenp,
+	                    precio_promedio = promediop,
+	                    precio_municipal = municipalp,
+	                    calidad = calidadp
+	                )
+					movp.save()
 	else:
 		formMer = MovimientoForm()
 	
