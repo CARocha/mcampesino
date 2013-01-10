@@ -1,11 +1,15 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-	<form action="." method="post">
+	<form id="formulariomovimiento" action="." method="POST">
 		{% csrf_token %}
-		{{ formMer.as_p }}
-		<p id="tablita">Productos frescos</p>
-		<table id="pf">
+		<div class="module">
+			{{ formMer.as_p }}
+		</div>
+	<div class="escondete">
+			<fieldset class="module">
+			<h2>Productos frescos</h2>
+		<table>
 			<thead>
 				<tr>
 					<th>Productos frescos</th>
@@ -22,8 +26,12 @@
 			</tbody>
 		</table>
 		<div id="forms"></div>
-		<p id="pp">Productos procesados</p>
-		<table id="tablita1">
+			
+		</fieldset>
+
+		<fieldset class="module">
+		<h2>Productos procesados</h2>
+		<table>
 			<thead>
 				<tr>
 					<th>Producto procesados</th>
@@ -40,7 +48,16 @@
 			</tbody>
 		</table>
 		<div id="forms2"></div>
-    	<input type="submit">
+	</fieldset>
+	<div class="submit-row">
+		<input type="submit"  value="Grabar y añadir otro" name="_addanother"/>
+    	<input type="submit" value="Grabar" name="_save" />
+    </div>
+
+</div>
+		
+		
+		
 	</form>
 
 

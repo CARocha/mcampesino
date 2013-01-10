@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from mercado.models import *
 from mercado.forms import *
 from django.utils import simplejson as json
+from django.core import serializers
 
 def reqdata(request):
 	mensaje = ''
@@ -14,7 +15,11 @@ def reqdata(request):
 		productosprocedados = ProductosProcesados.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado'])
 		prod1 = {x.id:x.nombre for x in productosfrescos}
 		prod2 = {x.id:x.nombre for x in productosprocedados}
-		mensaje = json.dumps(dict(productos=prod1,procesado=prod2))
+		uni1 = {x.id:x.unidad for x in productosfrescos}
+		uni2 = {x.id:x.unidad for x in productosprocedados}
+		#dati = serializers.serialize('json', ProductosFrescos.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado']).values('id','nombre','unidad'))
+		#pf = ProductosFrescos.objects.filter(actividadmercado__fkmercado__id=request.POST['mercado']).values_list('id','nombre', 'unidad') 
+		mensaje = json.dumps(dict(productos=prod1,procesado=prod2,unidadf=uni1,unidadp=uni2))
 	return HttpResponse(mensaje)
 
 def multipleform(request):

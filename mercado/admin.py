@@ -76,7 +76,8 @@ class MovimientoProductosFrescoInline(admin.TabularInline):
                 'precio_municipal','calidad'),)
         }),
     )
-    extra = 1
+    extra = 0
+    max_num = 0
     
 
 class MovimientoProductosProcesadosInline(admin.TabularInline):
@@ -88,7 +89,8 @@ class MovimientoProductosProcesadosInline(admin.TabularInline):
                 'precio_municipal','calidad'),)
         }),
     )
-    extra = 1
+    extra = 0
+    max_num = 0
 
 class MovimientoAdmin(AutocompleteModelAdmin):
     search_fields = ['__unicode__']
