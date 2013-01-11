@@ -7,6 +7,7 @@ from django.forms.formsets import formset_factory
 from django.forms.models import inlineformset_factory
 from django.forms.models import BaseModelFormSet
 from django.forms.models import modelformset_factory
+from django.contrib.auth.models import User
 
 
 class ActividadForm(forms.Form):
@@ -23,8 +24,16 @@ class ActividadForm(forms.Form):
 		#fields = ('tipo_organizacion_mercado','periodicidad','productos_procesados','productos_frescos')
 
 
-class MovimientoForm(forms.ModelForm):
-	#mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
+class MovimientoForm(ModelForm):
+	nombre_mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.none())
+	
+	def __init__(self, user, *args, **kwargs):
+		super(MovimientoForm, self).__init__(*args, **kwargs)
+
+		if user.is_superuser:
+			self.fields['nombre_mercado'].queryset = RegistroMercado.objects.all()
+		else:
+			self.fields['nombre_mercado'].queryset = RegistroMercado.objects.filter(usuario=user)
 	class Meta:
 		model = Movimiento
 		exclude = ('usuario',)

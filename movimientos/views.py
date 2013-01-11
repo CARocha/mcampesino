@@ -83,7 +83,7 @@ def multipleform(request):
 	                )
 					movp.save()
 	else:
-		formMer = MovimientoForm()
+		formMer = MovimientoForm(user=request.user)
 	
 		
 	return render_to_response('test.html', {'formMer':formMer},

@@ -18,6 +18,16 @@ class RegistroAdmin(admin.ModelAdmin):
 	inlines = [RegistroMercadoInline]
 
 class RegistroMercadoAdmin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        obj.usuario = request.user
+        obj.save()
+        
+    def queryset(self, request):
+        qs = super(RegistroMercadoAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(usuario=request.user)
+    exclude = ('usuario',)
     inlines = [FotosInline]
 
 admin.site.register(Registro, RegistroAdmin)

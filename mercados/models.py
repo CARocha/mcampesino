@@ -56,6 +56,7 @@ class RegistroMercado(models.Model):
 		auto_choose=True
     )
 	descripcion = models.TextField(null=True, blank=True)
+	usuario = models.ForeignKey(User)
 
 	class Meta:
 		verbose_name=u'Registro mercado'
