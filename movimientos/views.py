@@ -3,8 +3,10 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
-from mercado.models import *
-from mercado.forms import *
+from mercados.models import *
+from productos.models import *
+from movimientos.models import *
+from movimientos.forms import *
 from django.utils import simplejson as json
 from django.core import serializers
 

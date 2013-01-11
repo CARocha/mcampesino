@@ -1,15 +1,10 @@
 from django.contrib import admin
 from autocomplete.widgets import *
-from mercado.models import *
-from mercado.forms import *
+from mercados.models import *
+from productos.models import *
+from movimientos.forms import *
 from django.forms.models import BaseInlineFormSet
 
-class MyFormSet(BaseInlineFormSet):
-    def get_queryset(self):
-        if not hasattr(self, '_queryset'):
-            qs = super(MyFormSet, self).get_queryset().filter(calidad=True)
-            self._queryset = qs
-        return self._queryset
 
 class RegistroMercadoInline(admin.StackedInline):
 	model = RegistroMercado
@@ -97,7 +92,7 @@ class MovimientoAdmin(AutocompleteModelAdmin):
     fieldsets = (
             (None, {
                 'fields': (('nombre_mercado', 'fecha'),
-                ('nombre_persona','organizacion_persona'),
+                ('organizacion_persona'),
                 ('correo','telefono'))
         }),
     )

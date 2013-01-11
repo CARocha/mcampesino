@@ -114,7 +114,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'lugar',
-    'mercado',
+    'mercados',
+    'productos',
+    'movimientos',
     'smart_selects',
     'south',
     #'debug_toolbar',

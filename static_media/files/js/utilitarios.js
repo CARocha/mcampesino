@@ -70,7 +70,7 @@ $(document).ready(function(){
                type: 'POST',
                data: fd,
                success: function(){
-                       top.location = '/admin/mercado/movimiento';
+                       top.location = '/admin/movimientos/movimiento';
                },
                processData: false,
                contentType: false
