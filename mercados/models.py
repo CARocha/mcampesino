@@ -14,7 +14,7 @@ def get_file_path(intance,filename):
 
 
 class Registro(models.Model):
-	fecha_registro = models.DateField('Fecha de inicio operacion del mercado')
+	#fecha_registro = models.DateField('Fecha de  mercado')
 	fecha_falguni = models.DateField(auto_now_add=True) #nose para que esta fecha :/
 	nombre_persona = models.CharField('Nombre de persona que registra la informacion'
 		                              , max_length=200)
@@ -33,7 +33,9 @@ class RegistroMercado(models.Model):
 	fkregistro = models.ForeignKey(Registro, verbose_name=u'Persona que registro')
 	nombre_mercado = models.CharField('Nombre del mercado', 
 		                               max_length=200)
+	year = models.IntegerField('Año en que comenzo a funcionar el mercado')
 	pais = models.ForeignKey(Pais)
+
 	departamento = ChainedForeignKey(
 		Departamento,
         chained_field="pais",
