@@ -14,11 +14,13 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script>
  $(document).ready(function() {
-   $(".module:eq(3) td:eq(0) a:eq(0)").css("display", "none");
+   
    {%if not request.user.is_superuser %}
        $(".module:eq(2) tr:eq(1)").css("display", "none");
        $(".module:eq(2) tr:eq(2)").css("display", "none");
        $(".module:eq(2) td:eq(0) a:eq(0)").css("display", "none");
+   {%else%}
+       $(".module:eq(3) td:eq(0) a:eq(0)").css("display", "none");
    {%endif%}
  });
 </script>
