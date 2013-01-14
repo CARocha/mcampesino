@@ -99,13 +99,13 @@ class MovimientoProductosProcesadosInline(admin.TabularInline):
 
 class MovimientoAdmin(AutocompleteModelAdmin):
     search_fields = ['__unicode__']
-    fieldsets = (
-            (None, {
-                'fields': (('nombre_mercado', 'fecha'),
-                ('organizacion_persona'),
-                ('correo','telefono'))
-        }),
-    )
+    # fieldsets = (
+    #         (None, {
+    #             'fields': (('nombre_mercado', 'fecha'),
+    #             ('organizacion_persona'),
+    #             ('correo','telefono'))
+    #     }),
+    # )
     related_search_fields = {
 
                 'nombre_mercado': ('nombre_mercado',),
