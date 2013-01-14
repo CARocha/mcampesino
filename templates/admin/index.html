@@ -16,8 +16,9 @@
  $(document).ready(function() {
    $(".module:eq(3) td:eq(0) a:eq(0)").css("display", "none");
    {%if not request.user.is_superuser %}
-       $(".module:eq(3) tr:eq(1)").css("display", "none");
-       $(".module:eq(3) tr:eq(2)").css("display", "none");
+       $(".module:eq(2) tr:eq(1)").css("display", "none");
+       $(".module:eq(2) tr:eq(2)").css("display", "none");
+       $(".module:eq(2) td:eq(0) a:eq(0)").css("display", "none");
    {%endif%}
  });
 </script>
