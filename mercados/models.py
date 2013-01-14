@@ -15,7 +15,7 @@ def get_file_path(intance,filename):
 
 class Registro(models.Model):
 	#fecha_registro = models.DateField('Fecha de  mercado')
-	fecha_falguni = models.DateField(auto_now_add=True) #nose para que esta fecha :/
+	fecha_falguni = models.DateField(null=True, blank=True) #nose para que esta fecha :/
 	nombre_persona = models.CharField('Nombre de persona que registra la informacion'
 		                              , max_length=200)
 	nombre_organizacion = models.CharField('Nombre de organización a que pertenece la persona'
