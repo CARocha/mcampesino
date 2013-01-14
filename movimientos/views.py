@@ -14,7 +14,7 @@ def reqdata(request):
 	mensaje = ''
 	if request.is_ajax() and request.method == 'POST':
 		productosfrescos = ActividadMercado.objects.filter(fkmercado__id=request.POST['mercado']).order_by('-id')[0]
-		productosprocedados = ActividadMercado.objects.filter(fkmercado__id=request.POST['mercado']).order_by('id')[0]
+		productosprocedados = ActividadMercado.objects.filter(fkmercado__id=request.POST['mercado']).order_by('-id')[0]
 
 		prod1 = {x.id:x.nombre for x in productosfrescos.productos_frescos.all()}
 		prod2 = {x.id:x.nombre for x in productosprocedados.productos_procesados.all()}

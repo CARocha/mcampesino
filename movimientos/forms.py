@@ -10,7 +10,7 @@ from django.forms.models import inlineformset_factory
 from django.forms.models import BaseModelFormSet
 from django.forms.models import modelformset_factory
 from django.contrib.auth.models import User
-
+from django.contrib.admin.widgets import AdminDateWidget
 
 class ActividadForm(forms.Form):
 	tipo_organizacion_mercado = forms.ModelChoiceField(queryset=TipoOrganizacion.objects.all(),
@@ -36,6 +36,7 @@ class MovimientoForm(ModelForm):
 	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.all()
 	# 	else:
 	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.filter(usuario=user)
+	fecha = forms.DateField(widget = AdminDateWidget)
 	class Meta:
 		model = Movimiento
 		fields = ('nombre_mercado','fecha',)
