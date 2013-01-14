@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from django.forms import ModelForm
 from django import forms
 from mercados.models import *
