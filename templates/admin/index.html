@@ -11,7 +11,12 @@
 
 {% block content %}
 <div id="content-main">
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+ $(document).ready(function() {
+   $(".module:eq(3) td:eq(0) a:eq(0)").css("display", "none");
+ });
+</script>
 {% if app_list %}
     {% for app in app_list %}
         <div class="module">
