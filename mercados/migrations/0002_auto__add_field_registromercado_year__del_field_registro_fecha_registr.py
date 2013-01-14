@@ -21,11 +21,9 @@ class Migration(SchemaMigration):
         # Deleting field 'RegistroMercado.year'
         db.delete_column('mercados_registromercado', 'year')
 
-        # Adding field 'Registro.fecha_registro'
-        db.add_column('mercados_registro', 'fecha_registro',
-                      self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 1, 14, 0, 0)),
-                      keep_default=False)
 
+        # User chose to not deal with backwards NULL issues for 'Registro.fecha_registro'
+        raise RuntimeError("Cannot reverse this migration. 'Registro.fecha_registro' and its values cannot be restored.")
 
     models = {
         'auth.group': {
