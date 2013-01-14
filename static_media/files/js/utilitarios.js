@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('.escondete').css('display','none');
 
     $("#id_nombre_mercado").bind("change", function(e){
-        $('.escondete').show();
+        $('.escondete').fadeIn(1000);
        
         var mercado = $(this).val();
         $.post('/reqdata/', {mercado:mercado}, function(data){
