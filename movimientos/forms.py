@@ -42,9 +42,9 @@ class MovimientoForm(ModelForm):
 
 
 class MovimientoProductosFrescoForm(forms.ModelForm):
-	lista_inicial = []
-	for producto in ProductosFrescos.objects.all():
-		lista_inicial.append({'producto':str(producto.nombre),})
+	# lista_inicial = []
+	# for producto in ProductosFrescos.objects.all():
+	# 	lista_inicial.append({'producto':str(producto.nombre),})
 
 	# def __init__(self, *args, **kwargs):
 	# 	if not kwargs['initial']:
