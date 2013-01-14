@@ -17,30 +17,34 @@ $(document).ready(function(){
 
             var forms = $('#forms').html('');
             for (k in data.productos){
+                forms.append('<tr>');
                 var select = $('<select name="product-'+k+'"></select>').appendTo(forms);
                 $('<option value"'+k+'">'+data.productos[k]+'</option>').appendTo(select);
-                var unidad = $('<input type="text" name="unidad-'+k+'" value="'+data.unidadf[k]+'" readonly/>').appendTo(forms);
-                var volumen_venta = $('<input type="text" name="volumen-'+k+'" />').appendTo(forms);
-                var precio_promedio = $('<input type="text" name="promedio-'+k+'" />').appendTo(forms);
-                var precio_municipal = $('<input type="text" name="municipal-'+k+'" />').appendTo(forms);
+                var unidad = $('<td><input type="text" name="unidad-'+k+'" value="'+data.unidadf[k]+'" readonly/></td>').appendTo(forms);
+                var volumen_venta = $('<td><input type="text" name="volumen-'+k+'" /></td>').appendTo(forms);
+                var precio_promedio = $('<td><input type="text" name="promedio-'+k+'" /></td>').appendTo(forms);
+                var precio_municipal = $('<td><input type="text" name="municipal-'+k+'" /></td>').appendTo(forms);
                 var selecto = $('<select name="calidad-'+k+'"></select> <br>').appendTo(forms);
                 for(var i=0; i < datos.length; i++) {
                 selecto.append('<option value="'+datos[i].value+'">'+datos[i].text+'</option>');
                 }
+                forms.append('</tr>');
             }
             
             var forms2 = $('#forms2').html('');
             for (u in data.procesado){
+                forms2.append('<tr>');
                 var select = $('<select name="productp-'+u+'"></select>').appendTo(forms2);
                 $('<option value"'+u+'">'+data.procesado[u]+'</option>').appendTo(select);
-                var unidad = $('<input type="text" name="unidad-'+u+'" value="'+data.unidadp[u]+'" readonly/>').appendTo(forms2);
-                var volumen_venta = $('<input type="text" name="volumenp-'+u+'" />').appendTo(forms2);
-                var precio_promedio = $('<input type="text" name="promediop-'+u+'" />').appendTo(forms2);
-                var precio_municipal = $('<input type="text" name="municipalp-'+u+'" />').appendTo(forms2);
+                var unidad = $('<td><input type="text" name="unidad-'+u+'" value="'+data.unidadp[u]+'" readonly/></td>').appendTo(forms2);
+                var volumen_venta = $('<td><input type="text" name="volumenp-'+u+'" /></td>').appendTo(forms2);
+                var precio_promedio = $('<td><input type="text" name="promediop-'+u+'" /></td>').appendTo(forms2);
+                var precio_municipal = $('<td><input type="text" name="municipalp-'+u+'" /></td>').appendTo(forms2);
                 var selecto2 = $('<select name="calidadp-'+u+'"></select> <br>').appendTo(forms2);
                 for(var i=0; i < datos.length; i++) { 
                 selecto2.append('<option value="'+datos[i].value+'">'+datos[i].text+'</option>');
                 }
+                forms2.append('</tr>');
             }
 
         });
