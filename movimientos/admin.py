@@ -31,7 +31,7 @@ class RegistroMercadoAdmin(admin.ModelAdmin):
     exclude = ('usuario',)
     inlines = [FotosInline]
 
-admin.site.register(Registro, RegistroAdmin)
+admin.site.register(Registro)
 admin.site.register(RegistroMercado, RegistroMercadoAdmin)
 admin.site.register(PersonaContacto)
 admin.site.register(TipoOrganizacion)

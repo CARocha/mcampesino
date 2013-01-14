@@ -30,7 +30,7 @@ class Movimiento(models.Model):
 		verbose_name_plural = "Movimiento de los productos en el mercado"
 
 	def __unicode__(self):
-		return self.organizacion_persona
+		return self.nombre_mercado.nombre_mercado
 
 CHOICE_CALIDAD = (
 					(1, 'Excelente'),
