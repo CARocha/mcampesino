@@ -8,7 +8,7 @@ from productos.models import *
 from movimientos.models import *
 from movimientos.forms import *
 from django.utils import simplejson as json
-from django.core import serializers
+
 
 def reqdata(request):
 	mensaje = ''
@@ -87,6 +87,19 @@ def ver_mercado(request,id):
 							  'productos_procesados':productos_procesados},
 		                      context_instance=RequestContext(request))
 
+def _queryset_filtrado(request):
+	params = {}
+	if 'tipo_organizacion_mercado' in request.session:
+		params['tipo_organizacion_mercado'] = request.session['tipo_organizacion_mercado']
+	if 'periodicidad' in request.session:
+		params['periodicidad'] = request.session['periodicidad']
+	if 'productos_procesados' in request.session:
+		params['productos_procesados'] = request.session['productos_procesados']
+	if 'productos_frescos' in request.session:
+		params['productos_frescos'] = request.session['productos_frescos']
+    
+	return ActividadMercado.objects.filter(**params)
+
 def explorar(request):
 	if request.method == 'POST':
 		form = ActividadForm(request.POST)
@@ -95,7 +108,41 @@ def explorar(request):
 			request.session['periodicidad'] = form.cleaned_data['periodicidad']
 			request.session['productos_procesados'] = form.cleaned_data['productos_procesados']
 			request.session['productos_frescos'] = form.cleaned_data['productos_frescos']
+			bandera = 1
 	else:
 		form = ActividadForm()
-	return render_to_response('explora.html', {'form':form},
+		bandera = 0
+	lista = []
+	if bandera == 1:
+		con = _queryset_filtrado(request)
+	else:
+		request.session['tipo_organizacion_mercado'] = None          
+		request.session['periodicidad'] = None 
+		request.session['productos_procesados'] = None
+		request.session['productos_frescos'] = None  
+		con = ActividadMercado.objects.all()
+	for obj in con:
+		lista.append([obj.tipo_organizacion_mercado,
+			          obj.periodicidad,
+			          obj.productos_procesados,
+			          obj.productos_frescos,
+			          obj.id
+			        ]) 
+	return render_to_response('explora.html', {'form':form,'lista':lista},
 		                      context_instance=RequestContext(request))
+
+def obtener_mapa(request):
+    if request.is_ajax():
+        lista = []
+        params = _queryset_filtrado(request)
+        for objeto in params.distinct():
+                dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
+                	        id=objeto.id,
+                            lon=float(objeto.fkmercado.longitud) , 
+                            lat=float(objeto.fkmercado.latitud),
+                            propiedad=objeto.periodicidad,
+                            )
+            lista.append(dicc)
+
+        serializado = simplejson.dumps(lista)
+    	return HttpResponse(serializado, mimetype='application/json')	
