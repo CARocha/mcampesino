@@ -6,6 +6,7 @@ urlpatterns = patterns('movimientos.views',
 	url(r'^explora/$', 'explorar', name="explorar"),
 	url(r'^prueba/$', 'multipleform', name="prueba"),
 	url(r'^reqdata/$', 'reqdata', name="reqdata"),
+	url(r'^traemelosdatos/$', 'mandar_info_producto', name="mandar-info-producto"),
 
 )
 

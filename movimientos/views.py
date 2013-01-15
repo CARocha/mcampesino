@@ -131,18 +131,25 @@ def explorar(request):
 	return render_to_response('explora.html', {'form':form,'lista':lista},
 		                      context_instance=RequestContext(request))
 
-# def obtener_mapa(request):
-#     if request.is_ajax():
-#         lista = []
-#         params = _queryset_filtrado(request)
-#         for objeto in params.distinct():
-#                 dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
-#                 	        id=objeto.id,
-#                             lon=float(objeto.fkmercado.longitud) , 
-#                             lat=float(objeto.fkmercado.latitud),
-#                             propiedad=objeto.periodicidad,
-#                             )
-#             lista.append(dicc)
+def obtener_mapa(request):
+    if request.is_ajax():
+        lista = []
+        params = _queryset_filtrado(request)
+        for objeto in params.distinct():
+            dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
+                	    id=objeto.id,
+                        lon=float(objeto.fkmercado.longitud) , 
+                        lat=float(objeto.fkmercado.latitud),
+                        propiedad=objeto.periodicidad,
+                        )
+            lista.append(dicc)
 
-#         serializado = simplejson.dumps(lista)
-#     	return HttpResponse(serializado, mimetype='application/json')	
+        serializado = simplejson.dumps(lista)
+    	return HttpResponse(serializado, mimetype='application/json')
+
+def mandar_info_producto(request):
+	mensaje = ''
+	if request.is_ajax() and request.method == 'POST':
+		datos = MovimientoProductosFresco.objects.filter(producto_fresco=request.POST.get['parametro'])
+	mensaje = json.dumps()
+	return HttpResponse(mensaje, mimetype='application/json')	
