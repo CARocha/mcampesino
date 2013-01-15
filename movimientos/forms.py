@@ -25,9 +25,10 @@ class ActividadForm(forms.Form):
 	class Meta:
 		model = ActividadMercado
 
+YEAR_CHOICES = ('2011', '2012', '2013','2014', '2015', '2016','2017', '2018', '2019')
 hoy = datetime.date.today()
 class MovimientoForm(ModelForm):
-	fecha = forms.DateField(label="Fecha de reporte", widget=SelectDateWidget(), initial=hoy)
+	fecha = forms.DateField(label="Fecha de reporte", widget=SelectDateWidget(years=YEAR_CHOICES), initial=hoy)
 	class Meta:
 		model = Movimiento
 		fields = ('nombre_mercado','fecha',)
