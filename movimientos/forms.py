@@ -10,7 +10,8 @@ from django.forms.models import inlineformset_factory
 from django.forms.models import BaseModelFormSet
 from django.forms.models import modelformset_factory
 from django.contrib.auth.models import User
-
+from django.forms.extras.widgets import SelectDateWidget
+import datetime
 
 class ActividadForm(forms.Form):
 	tipo_organizacion_mercado = forms.ModelChoiceField(queryset=TipoOrganizacion.objects.all(),
@@ -23,43 +24,18 @@ class ActividadForm(forms.Form):
     										   required=False, label="produc. frescos")
 	class Meta:
 		model = ActividadMercado
-		#fields = ('tipo_organizacion_mercado','periodicidad','productos_procesados','productos_frescos')
 
-
+YEAR_CHOICES = ('2011', '2012', '2013','2014', '2015', '2016','2017', '2018', '2019')
+hoy = datetime.date.today()
 class MovimientoForm(ModelForm):
-	#nombre_mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
-	
-	# def __init__(self, user, *args, **kwargs):
-	# 	super(MovimientoForm, self).__init__(*args, **kwargs)
-
-	# 	if user.is_superuser:
-	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.all()
-	# 	else:
-	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.filter(usuario=user)
+	fecha = forms.DateField(label="Fecha de reporte", widget=SelectDateWidget(years=YEAR_CHOICES), initial=hoy)
 	class Meta:
 		model = Movimiento
 		fields = ('nombre_mercado','fecha',)
 
 
 class MovimientoProductosFrescoForm(forms.ModelForm):
-	# lista_inicial = []
-	# for producto in ProductosFrescos.objects.all():
-	# 	lista_inicial.append({'producto':str(producto.nombre),})
-
-	# def __init__(self, *args, **kwargs):
-	# 	if not kwargs['initial']:
-	# 		kwargs['initial'] = {}
-	# 	kwargs['initial'].update({'nombre':'caramelo'})
-	# 	super(MovimientoProductosFrescoForm, self).__init__(*args, **kwargs)
-	# 	self.initial = [{'nombre':'caramelo'},{'nombre':'nose'},]
 
 	class Meta:
 		model = MovimientoProductosFresco
 		exclude = ('fkmovimiento',)
-
-# FrescoFormSet = modelformset_factory(ProductosFrescos, formset=BaseFrescoFormSet)
-# formset_fresco = FrescoFormSet(queryset=ProductosFrescos.objects.none())
-# class MovimientoProductosProcesadoForm(forms.ModelForm):
-# 	class Meta:
-# 		model = MovimientoProductosProcesado
-# 		exclude = ('fkmovimiento',)

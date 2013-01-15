@@ -4,6 +4,8 @@ import os
 from django.contrib.auth.models import User
 from productos.models import *
 from mercados.models import *
+import datetime
+
 
 
 #add_introspection_rules([], ["^thumbs\.ImageWithThumbsField"])
