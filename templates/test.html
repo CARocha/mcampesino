@@ -1,7 +1,11 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-
+<style>
+select{
+    margin:7px;
+}
+</style>
 	<form id="formulariomovimiento" action="." method="POST">
 		{% csrf_token %}
 		<div class="module">

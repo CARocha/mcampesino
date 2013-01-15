@@ -6,20 +6,6 @@
     });
 </script>
 <script src="{{STATIC_URL}}js/highcharts.js"></script>
-<script src="{{STATIC_URL}}js/tab.min.js"></script>
-<link href="{{STATIC_URL}}css/tab.css" rel="stylesheet">
-<script type="text/javascript">
-  Tab.setOptions({
-    position           : "top",     // top, bottom
-    autohide           : false,      // hide tab menus on mouse leave
-    animation          : 'blind-h', // slide-h, slide-v, slide-t, slide-r, slide-b, slide-l, blind-h, blind-v, fade, rotate
-    speed              : 500,       // animation speed (in ms)
-    shortcut           : true,      // display tab menu shortcuts
-    indicator          : false,      // display indicator of tab position on clicking tab
-    keyboard           : true,     // use left/right arrows keys to navigate tabs
-    slideshow          : false      // enable slideshow
-  });
-</script>
 <script type="text/javascript">
 // Para el grafico test
 $(function () {
@@ -27,7 +13,7 @@ $(function () {
     $(document).ready(function() {
         chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'container',
+                renderTo: 'container1',
                 type: 'line',
                 marginRight: 130,
                 marginBottom: 25
@@ -93,7 +79,8 @@ $(function () {
             chart: {
                 renderTo: 'container2',
                 zoomType: 'x',
-                spacingRight: 20
+                spacingRight: 20,
+                width: $('.tab-pane').width()
             },
             credits: {
                text: '',
@@ -163,7 +150,6 @@ $(function () {
             }]
         });
     });
-    
 });
 
     $(document).ready(function() {
@@ -216,7 +202,7 @@ $(function () {
       <div class="container">
         <div class="row">
           <div class="span12">
-            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b> {% for periodo in mercado.actividadmercado_set.all %} {{periodo.periodicidad}} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organizacion</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {{periodo.get_modalidad_display}} {%endfor%}
+            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b>{% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%}{{periodo.periodicidad}}{%endif%} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organizacion</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%} {{periodo.get_modalidad_display}}{%endif%} {%endfor%}
           </div>
         </div>
       </div> <!-- /container -->
@@ -242,46 +228,15 @@ $(function () {
                   </ul>
               <div class="tab-content">
                   <div class="tab-pane active" id="productos-frescos">
-                      <div class="melonhtml5_tab">
-                          <div class="menu">
-                              <!-- los thumbs deben ser 60px x 60px -->
-                              {% for fresco in productos_frescos %}
-                                <a href="#">
-                                <img src="{{fresco.picture.url_60x60}}" class="img-circle"><br>{{fresco.nombre}}
-                              </a>
-                              {% endfor %}
-                          </div>
-                          <div class="main">
-                            {% for cosas in productos_frescos %}
-                              <div class="tab-subcontent">{{cosas.nombre}}
-                                  <div>
-                                    Precio promedio del año <span class="valor">C$450.9</span> x quintal
-                                  </div>
-                                  <div id="container" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
-                                  <br>
-                                  <div id="container2" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
-                              </div>
-                            {% endfor %}
-                          </div>
-                      </div>
+                    {% for fresco in productos_frescos %}
+                        <a href="#" class="btn">
+                        <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
+                        </a>
+                      {% endfor %}
+                      <div id="container1" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                   </div>
-                  <div class="tab-pane active" id="productos-procesados">
-                      <div class="melonhtml5_tab">
-                          <div class="menu">
-                              <!-- los thumbs deben ser 60px x 60px -->
-                              {% for procesado in productos_procesados %}
-                                <a href="#">
-                                <img src="{{procesado.picture.url_60x60}}" class="img-circle"><br>{{procesado.nombre}}
-                              </a>
-                              {% endfor %}
-                          </div>
-                          <div class="main">
-                            {% for cosas in productos_procesados %}
-                              <div class="tab-subcontent">{{cosas.nombre}}
-                                que norte</div>
-                            {% endfor %}
-                          </div>
-                      </div>
+                  <div class="tab-pane" id="productos-procesados">
+                      productos procesados
                   </div>
                   <div class="tab-pane" id="vendedores">
                      <table class="table">
