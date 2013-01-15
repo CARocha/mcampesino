@@ -33,7 +33,7 @@ $(document).ready(function(){
             
             var forms2 = $('#forms2').html('');
             for (u in data.procesado){
-                forms2.append('<tr>');
+                forms2.append('<tr id="line_p'+u+'">');
                 var select = $('<select name="productp-'+u+'"></select>').appendTo(forms2);
                 $('<option value"'+u+'">'+data.procesado[u]+'</option>').appendTo(select);
                 var unidad = $('<td><input type="text" value=0 name="unidad-'+u+'" value="'+data.unidadp[u]+'" readonly/></td>').appendTo(forms2);
