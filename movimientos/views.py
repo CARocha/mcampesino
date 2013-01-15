@@ -150,6 +150,6 @@ def obtener_mapa(request):
 def mandar_info_producto(request):
 	mensaje = ''
 	if request.is_ajax() and request.method == 'POST':
-		datos = MovimientoProductosFresco.objects.filter(producto_fresco=request.POST.get['parametro'])
-	mensaje = json.dumps()
+		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST.get['nombre'])
+	mensaje = json.dumps('hola XD')
 	return HttpResponse(mensaje, mimetype='application/json')	

@@ -154,7 +154,15 @@ $(function () {
 
     $(document).ready(function() {
       $('#prodcutos-procesados').addClass('active');
-    });  
+    });
+
+  (function prueba(parametro){
+    var nombre = parametro;
+    alert(nombre);
+    $.post('/traemelosdatos/',{nombre:nombre}, function (data){
+        console.log(data);
+    });
+  });
 
 </script>
 
@@ -229,11 +237,11 @@ $(function () {
               <div class="tab-content">
                   <div class="tab-pane active" id="productos-frescos">
                     {% for fresco in productos_frescos %}
-                        <a href="#" class="btn">
+                        <a id="productos" href="#" class="btn" onclick="prueba({{fresco.id}});">
                         <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
                         </a>
                       {% endfor %}
-                      <div id="container1" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                      <div id="container-{{fresco.nombre}}" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                   </div>
                   <div class="tab-pane" id="productos-procesados">
                       productos procesados
