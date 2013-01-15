@@ -24,20 +24,9 @@ class ActividadForm(forms.Form):
     										   required=False, label="produc. frescos")
 	class Meta:
 		model = ActividadMercado
-		#fields = ('tipo_organizacion_mercado','periodicidad','productos_procesados','productos_frescos')
-
 
 hoy = datetime.date.today()
 class MovimientoForm(ModelForm):
-	#nombre_mercado = forms.ModelChoiceField(widget=forms.Select, queryset=RegistroMercado.objects.all())
-	
-	# def __init__(self, user, *args, **kwargs):
-	# 	super(MovimientoForm, self).__init__(*args, **kwargs)
-
-	# 	if user.is_superuser:
-	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.all()
-	# 	else:
-	# 		self.fields['nombre_mercado'].queryset = RegistroMercado.objects.filter(usuario=user)
 	fecha = forms.DateField(label="Fecha de reporte", widget=SelectDateWidget(), initial=hoy)
 	class Meta:
 		model = Movimiento
@@ -45,24 +34,7 @@ class MovimientoForm(ModelForm):
 
 
 class MovimientoProductosFrescoForm(forms.ModelForm):
-	# lista_inicial = []
-	# for producto in ProductosFrescos.objects.all():
-	# 	lista_inicial.append({'producto':str(producto.nombre),})
-
-	# def __init__(self, *args, **kwargs):
-	# 	if not kwargs['initial']:
-	# 		kwargs['initial'] = {}
-	# 	kwargs['initial'].update({'nombre':'caramelo'})
-	# 	super(MovimientoProductosFrescoForm, self).__init__(*args, **kwargs)
-	# 	self.initial = [{'nombre':'caramelo'},{'nombre':'nose'},]
 
 	class Meta:
 		model = MovimientoProductosFresco
 		exclude = ('fkmovimiento',)
-
-# FrescoFormSet = modelformset_factory(ProductosFrescos, formset=BaseFrescoFormSet)
-# formset_fresco = FrescoFormSet(queryset=ProductosFrescos.objects.none())
-# class MovimientoProductosProcesadoForm(forms.ModelForm):
-# 	class Meta:
-# 		model = MovimientoProductosProcesado
-# 		exclude = ('fkmovimiento',)
