@@ -20,9 +20,10 @@ function myFunction(value,titulo)
   var nombre = value;
   var texto = "Precios del " + titulo;
   //alert(loqusea);
-  document.getElementById(jajaja).innerHTML=(value);
+  $(".grafito").attr("id",jajaja);
   $.post('/traemelosdatos/',{nombre:nombre}, function (data){  
     var chart;
+    var medi = "C$ cordobas por " + data.medida;
     chart = new Highcharts.Chart({
             chart: {
                 renderTo: jajaja,
@@ -42,16 +43,15 @@ function myFunction(value,titulo)
                 x: -20 //center
             },
             subtitle: {
-                text: 'Mercado Siuna',
+                text: data.nombre,
                 x: -20
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: data.listaf
             },
             yAxis: {
                 title: {
-                    text: 'C$ cordobas x quintal'
+                    text: medi
                 },
                 plotLines: [{
                     value: 0,
@@ -134,7 +134,7 @@ function myFunction(value,titulo)
       <div class="container">
         <div class="row">
           <div class="span12">
-            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b>{% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%}{{periodo.periodicidad}}{%endif%} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organizacion</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%} {{periodo.get_modalidad_display}}{%endif%} {%endfor%}
+            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b>{% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%}{{periodo.periodicidad}}{%endif%} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organización</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%} {{periodo.get_modalidad_display}}{%endif%} {%endfor%}
           </div>
         </div>
       </div> <!-- /container -->
@@ -164,8 +164,9 @@ function myFunction(value,titulo)
                         <a id="productos" href="#" class="btn" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
                         <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
                         </a>
-                        <div id="container-{{fresco.id}}" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                        
                       {% endfor %}
+                      <div class="grafito" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                       
                   </div>
                   <div class="tab-pane" id="productos-procesados">

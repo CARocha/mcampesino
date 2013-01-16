@@ -154,9 +154,40 @@ def mandar_info_producto(request):
 		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST['nombre'])
 	lista1 = []
 	lista2 = []
+	listafecha = []
+	nombre = []
+	medida = []
 	for x in datos:
 		lista1.append(x.precio_promedio)
 		lista2.append(x.precio_municipal)
+		nombre.append(x.fkmovimiento.nombre_mercado.nombre_mercado)
+		medida.append(x.producto_fresco.unidad)
+		if x.fkmovimiento.fecha.month == 1:
+			listafecha.append("Enero-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 2:
+			listafecha.append("Febrero-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 3:
+			listafecha.append("Marzo-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 4:
+			listafecha.append("Abril-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 5:
+			listafecha.append("Mayo-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 6:
+			listafecha.append("Junio-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 7:
+			listafecha.append("Julio-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 8:
+			listafecha.append("Agosto-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 9:
+			listafecha.append("Septiembre-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 10:
+			listafecha.append("Octubre-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 11:
+			listafecha.append("Noviembre-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 12:
+			listafecha.append("Diciembre-"+str(x.fkmovimiento.fecha.year))
 
-	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2))
+	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2,
+		                      listaf=listafecha,nombre=list(set(nombre)),
+		                      medida=list(set(medida))))
 	return HttpResponse(mensaje, mimetype='application/json')	
