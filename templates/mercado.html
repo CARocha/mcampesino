@@ -23,7 +23,7 @@ function myFunction(value,titulo)
   $(".grafito").attr("id",jajaja);
   $.post('/traemelosdatos/',{nombre:nombre}, function (data){  
     var chart;
-    var medi = "C$ cordobas por " + data.medida;
+    var medi = "C$ cordobas por" + data.medida;
     chart = new Highcharts.Chart({
             chart: {
                 renderTo: jajaja,
@@ -110,6 +110,11 @@ function myFunction(value,titulo)
             <div class="titulo-descripcion"><i class="icon-star"></i> &nbsp;DESCRIPCION</div>
             <div class="descripcion-mercado">
               <p>{{mercado.descripcion}}.</p>
+              {% for obj in mercado.actividadmercado_set.all %}
+                  {% for x in obj.productos_frescos.all %}
+                      {{x.id}}-{{x.nombre}}
+                  {% endfor %}
+              {% endfor %}
             </div>
           </div>
           <div class="span6">
