@@ -82,11 +82,15 @@ def ver_mercado(request,id):
 	productos_frescos = ProductosFrescos.objects.all()
 	productos_procesados = ProductosProcesados.objects.all()
 
-	
+	lista1 = {}
+	for mer in mercado.actividadmercado_set.all():
+		lista1 = [(x.id,x.nombre,x.picture) for x in mer.productos_frescos.all()]
 
+	print lista1
 	return render_to_response('mercado.html', {'mercado':mercado, 
 							  'productos_frescos':productos_frescos,
-							  'productos_procesados':productos_procesados},
+							  'productos_procesados':productos_procesados,
+							  'lista1':lista1},
 		                      context_instance=RequestContext(request))
 
 def _queryset_filtrado(request):

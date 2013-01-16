@@ -127,11 +127,11 @@ function myFunction(value,titulo)
             <div class="titulo-descripcion"><i class="icon-star"></i> &nbsp;DESCRIPCION</div>
             <div class="descripcion-mercado">
               <p>{{mercado.descripcion}}.</p>
-              {% for obj in mercado.actividadmercado_set.all %}
-                  {% for x in obj.productos_frescos.all %}
-                      {{x.id}}-{{x.nombre}}
+              
+                  {% for k in lista1 %}
+                      {{k.0}}***{{k.1}}--{{k.2}}<br>
                   {% endfor %}
-              {% endfor %}
+             
             </div>
           </div>
           <div class="span6">
@@ -184,16 +184,16 @@ function myFunction(value,titulo)
                   <div class="tab-pane active" id="productos-frescos">
                     {%if productos_frescos.count > 6%}
                     <ul class="bxslider">
-                      {% for fresco in productos_frescos %}
-                        <li><a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
-                        <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
+                      {% for fresco in lista1 %}
+                        <li><a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <img src="{{fresco.2.url_60x60}}" class="img-circle">{{fresco.1}}
                         </a></li>
                       {% endfor %}
                     </ul>
                     {%else%}
-                      {% for fresco in productos_frescos %}
-                        <a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
-                        <img src="{{fresco.picture.url_60x60}}" class="img-circle"><br>{{fresco.nombre}}
+                      {% for fresco in lista1 %}
+                        <a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <img src="{{fresco.2.url_60x60}}" class="img-circle"><br>{{fresco.1}}
                         </a>
                         
                       {% endfor %}
