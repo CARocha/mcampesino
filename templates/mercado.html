@@ -3,12 +3,17 @@
 <script src="{{STATIC_URL}}js/highcharts.js"></script>
 <script src="{{STATIC_URL}}js/custom.js"></script>
 <script src="{{STATIC_URL}}js/jquery.cookie.js"></script>
+<script src="{{STATIC_URL}}js/jquery.bxslider.min.js"></script>
+<link href="{{ STATIC_URL }}css/jquery.bxslider.css" rel="stylesheet">
 <script type="text/javascript">
     $(document).ready(function() {
         $('#explora').addClass("seleccionado");
     });
 
+</script>
 
+
+<script type="text/javascript">
 // Para el grafico test
     $(document).ready(function() {
       $('#prodcutos-procesados').addClass('active');
@@ -86,8 +91,20 @@ function myFunction(value,titulo)
   });
 }
 
-
-
+    $(document).ready(function() {
+      $('#prodcutos-procesados').addClass('active');
+      $('.bxslider').bxSlider({
+        minSlides: 6,
+        maxSlides: 6,
+        slideWidth: 110,
+        slideMargin: 5,
+        infiniteLoop: false,
+        pager:false,
+        controls: true,
+        moveSlides :2,
+        autoControls: true,
+      });
+    });  
 </script>
 
 {%endblock%}
@@ -165,17 +182,43 @@ function myFunction(value,titulo)
                   </ul>
               <div class="tab-content">
                   <div class="tab-pane active" id="productos-frescos">
-                    {% for fresco in productos_frescos %}
-                        <a id="productos" href="#" class="btn" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
+                    {%if productos_frescos.count > 6%}
+                    <ul class="bxslider">
+                      {% for fresco in productos_frescos %}
+                        <li><a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
                         <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
+                        </a></li>
+                      {% endfor %}
+                    </ul>
+                    {%else%}
+                      {% for fresco in productos_frescos %}
+                        <a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
+                        <img src="{{fresco.picture.url_60x60}}" class="img-circle"><br>{{fresco.nombre}}
                         </a>
                         
                       {% endfor %}
-                      <div class="grafito" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                       
+                    {%endif%}
+                     <div class="grafito" style="min-width: 200px; height: 300px; margin: 0 auto"></div>        
                   </div>
                   <div class="tab-pane" id="productos-procesados">
-                      productos procesados
+                    {%if productos_procesados.count > 6%}
+                    <ul class="bxslider">
+                      {% for proce in productos_procesados %}
+                        <li><a href="#" class="btn btn-producto">
+                        <img src="{{proce.picture.url_60x60}}" class="img-circle">{{proce.nombre}}
+                        </a></li>
+                      {% endfor %}
+                      </ul>
+                      {%else%}
+                      {% for proce in productos_procesados %}
+                        <a href="#" class="btn btn-producto">
+                        <img src="{{proce.picture.url_60x60}}" class="img-circle"><br>{{proce.nombre}}
+                        </a>
+                      {% endfor %}
+                      {%endif%}
+                      <div id="container2" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+
                   </div>
                   <div class="tab-pane" id="vendedores">
                      <table class="table">
