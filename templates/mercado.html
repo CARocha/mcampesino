@@ -1,19 +1,31 @@
 {% extends "base.html"%}
 {%block extra%}
+<script src="{{STATIC_URL}}js/highcharts.js"></script>
+<script src="{{STATIC_URL}}js/custom.js"></script>
+<script src="{{STATIC_URL}}js/jquery.cookie.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#explora').addClass("seleccionado");
     });
-</script>
-<script src="{{STATIC_URL}}js/highcharts.js"></script>
-<script type="text/javascript">
+
+
 // Para el grafico test
-$(function () {
-    var chart;
     $(document).ready(function() {
-        chart = new Highcharts.Chart({
+      $('#prodcutos-procesados').addClass('active');
+    });
+
+function myFunction(value,titulo)
+{
+  var jajaja = "container-" + value;
+  var nombre = value;
+  var texto = "Precios del " + titulo;
+  //alert(loqusea);
+  document.getElementById(jajaja).innerHTML=(value);
+  $.post('/traemelosdatos/',{nombre:nombre}, function (data){  
+    var chart;
+    chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'container1',
+                renderTo: jajaja,
                 type: 'line',
                 marginRight: 130,
                 marginBottom: 25
@@ -26,7 +38,7 @@ $(function () {
                text: '',
             },
             title: {
-                text: 'Precios del Maiz',
+                text: texto,
                 x: -20 //center
             },
             subtitle: {
@@ -63,106 +75,18 @@ $(function () {
             },
             series: [{
                 name: 'Precio de mercado',
-                data: [400, 390, 350, 370, 390, 415, 480, 450, 500, 490, 500, 510]
+                data: data.fresco
             },  {
                 name: 'Precio municipal',
-                data: [410, 390, 380, 410, 420, 450, 540, 550, 550, 540, 530, 550]
+                data: data.fresco2
             }]
-        });
-    });   
-});
+        }); 
 
-$(function () {
-    var chart2;
-    $(document).ready(function() {
-        chart2 = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container2',
-                zoomType: 'x',
-                spacingRight: 20,
-                width: $('.tab-pane').width()
-            },
-            credits: {
-               text: '',
-            },
-            title: {
-                text: 'Volumen de venta del Maiz'
-            },
-            subtitle: {
-                text: 'Mercado Siuna'
-            },
-            xAxis: {
-                type: 'datetime',
-                maxZoom: 14 * 24 * 3600000, // fourteen days
-                title: {
-                    text: null
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Quintales'
-                },
-                showFirstLabel: false
-            },
-            tooltip: {
-                shared: true
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, 'rgba(2,0,0,0)']
-                        ]
-                    },
-                    lineWidth: 1,
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: true,
-                                radius: 5
-                            }
-                        }
-                    },
-                    shadow: false,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-    
-            series: [{
-                type: 'area',
-                name: 'Quintales',
-                pointInterval: 24 * 3600 * 1000,
-                pointStart: Date.UTC(2006, 0, 01),
-                data: [
-                    400,545,123,455,344,567,234,455,550,600,780,656,440,467,550,660,700,800,900,600,700,450,500,600,670,600,620,560,600,630,630,620,610,600,700,800
-                ]
-            }]
-        });
-    });
-});
-
-    $(document).ready(function() {
-      $('#prodcutos-procesados').addClass('active');
-    });
-
-  (function prueba(parametro){
-    var nombre = parametro;
-    alert(nombre);
-    $.post('/traemelosdatos/',{nombre:nombre}, function (data){
-        console.log(data);
-    });
+    //funcion post cierra 
   });
+}
+
+
 
 </script>
 
@@ -237,11 +161,12 @@ $(function () {
               <div class="tab-content">
                   <div class="tab-pane active" id="productos-frescos">
                     {% for fresco in productos_frescos %}
-                        <a id="productos" href="#" class="btn" onclick="prueba({{fresco.id}});">
+                        <a id="productos" href="#" class="btn" onclick="myFunction('{{fresco.id}}','{{fresco.nombre}}')">
                         <img src="{{fresco.picture.url_60x60}}" class="img-circle">{{fresco.nombre}}
                         </a>
+                        <div id="container-{{fresco.id}}" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
                       {% endfor %}
-                      <div id="container-{{fresco.nombre}}" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                      
                   </div>
                   <div class="tab-pane" id="productos-procesados">
                       productos procesados

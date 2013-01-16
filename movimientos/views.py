@@ -149,7 +149,14 @@ def obtener_mapa(request):
 
 def mandar_info_producto(request):
 	mensaje = ''
+
 	if request.is_ajax() and request.method == 'POST':
-		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST.get['nombre'])
-	mensaje = json.dumps('hola XD')
+		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST['nombre'])
+	lista1 = []
+	lista2 = []
+	for x in datos:
+		lista1.append(x.precio_promedio)
+		lista2.append(x.precio_municipal)
+
+	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2))
 	return HttpResponse(mensaje, mimetype='application/json')	
