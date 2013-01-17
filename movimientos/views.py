@@ -4,10 +4,13 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
 from mercados.models import *
+from lugar.models import *
 from productos.models import *
 from movimientos.models import *
 from movimientos.forms import *
 from django.utils import simplejson as json
+from django.template.loader import get_template
+from django.template import Context
 
 
 def reqdata(request):
@@ -155,6 +158,28 @@ def obtener_mapa(request):
 
         serializado = simplejson.dumps(lista)
     	return HttpResponse(serializado, mimetype='application/json')
+
+def test_mapa(request):
+ #    lista = []
+ #    params = Municipio.objects.all()
+ #    print Municipio.objects.all()
+ #    for objeto in Municipio.objects.all():
+ #    	print objeto
+ #        dicc = dict(nombre=objeto.nombre, 
+ #            	    id=objeto.id,
+ #                    lon=float(objeto.longitud) , 
+ #                    lat=float(objeto.latitud),
+ #                    )
+ #        lista.append(dicc)
+	# serializado = json.dumps(lista)
+	# return HttpResponse(serializado, mimetype='application/json')
+    muni = Municipio.objects.all()[0:50]
+    context = {
+               'muni': muni,
+              }
+    template = get_template('mapa.json')
+    response = template.render(Context(context))
+    return HttpResponse(response, mimetype="application/json")
 
 def mandar_info_producto(request):
 	mensaje = ''
