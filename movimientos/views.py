@@ -173,7 +173,7 @@ def test_mapa(request):
  #        lista.append(dicc)
 	# serializado = json.dumps(lista)
 	# return HttpResponse(serializado, mimetype='application/json')
-    muni = Municipio.objects.all()[0:50]
+    muni = Municipio.objects.all()
     context = {
                'muni': muni,
               }
