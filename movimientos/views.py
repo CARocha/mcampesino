@@ -86,11 +86,14 @@ def ver_mercado(request,id):
 	for mer in mercado.actividadmercado_set.all():
 		lista1 = [(x.id,x.nombre,x.picture) for x in mer.productos_frescos.all()]
 
-	print lista1
+	lista2 = {}
+	for mer in mercado.actividadmercado_set.all():
+		lista2 = [(x.id,x.nombre,x.picture) for x in mer.productos_procesados.all()]
+
 	return render_to_response('mercado.html', {'mercado':mercado, 
 							  'productos_frescos':productos_frescos,
 							  'productos_procesados':productos_procesados,
-							  'lista1':lista1},
+							  'lista1':lista1,'lista2':lista2},
 		                      context_instance=RequestContext(request))
 
 def _queryset_filtrado(request):
@@ -169,6 +172,53 @@ def mandar_info_producto(request):
 		lista2.append(x.precio_municipal)
 		nombre.append(x.fkmovimiento.nombre_mercado.nombre_mercado)
 		medida.append(x.producto_fresco.unidad)
+		listaVolumen.append(x.volumen_venta_global)
+		if x.fkmovimiento.fecha.month == 1:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Ene-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 2:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Feb-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 3:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Mar-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 4:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Abr-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 5:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-May-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 6:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Jun-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 7:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Jul-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 8:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Agos-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 9:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Sep-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 10:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Oct-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 11:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Nov-"+str(x.fkmovimiento.fecha.year))
+		elif x.fkmovimiento.fecha.month == 12:
+			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Dic-"+str(x.fkmovimiento.fecha.year))
+
+	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2,
+		                      listaf=listafecha,nombre=list(set(nombre)),
+		                      medida=list(set(medida)), volum=listaVolumen))
+	return HttpResponse(mensaje, mimetype='application/json')
+
+def mandar_info_procesado(request):
+	mensaje = ''
+
+	if request.is_ajax() and request.method == 'POST':
+		datos = MovimientoProductosProcesados.objects.filter(fkproducto_fresco__id=request.POST['nombre']).order_by('fkmovimiento__fecha')
+	lista1 = []
+	lista2 = []
+	listafecha = []
+	nombre = []
+	medida = []
+	listaVolumen = []
+	for x in datos:
+		lista1.append(x.precio_promedio)
+		lista2.append(x.precio_municipal)
+		nombre.append(x.fkmovimiento.nombre_mercado.nombre_mercado)
+		medida.append(x.fkproducto_fresco.unidad)
 		listaVolumen.append(x.volumen_venta_global)
 		if x.fkmovimiento.fecha.month == 1:
 			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Ene-"+str(x.fkmovimiento.fecha.year))
