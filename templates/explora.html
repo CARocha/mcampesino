@@ -5,6 +5,53 @@
         $('#explora').addClass("seleccionado");
     });
 </script>
+
+  <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js'></script>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.css' rel='stylesheet' />
+  <style>
+
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+
+<script>
+    // GeoJSON input features
+    // The image and url properties of the features will be used in
+    // the tooltips
+    //var features = mapbox.markers.layer().url('http://localhost:8000/explora/test/');
+
+    // Create map
+    var map = mapbox.map('map');
+    map.addLayer(mapbox.layer().id('byroncorrales.map-tcxnk6dp'));
+
+    // Create and add marker layer
+    var markers = mapbox.markers.layer().url('http://localhost:8000/explora/test/');
+    mapbox.markers.interaction(markers);
+    map.addLayer(markers);
+    map.ui.zoomer.add();
+
+    // Set a custom formatter for tooltips
+    // Provide a function that returns html to be used in tooltip
+    // interaction.formatter(function(feature) {
+    //     var o = '<a target="_blank" href="' + feature.properties.url + '">' +
+    //         '<img src="' + feature.properties.image + '">' +
+    //         '<h2>' + feature.properties.city + '</h2>' +
+    //         '</a>';
+
+    //     return o;
+    // });
+
+    // Set iniital center and zoom
+    map.centerzoom({
+        lat: 12.735042, 
+        lon: -85.232663
+    }, 8);
+    map.zoom(8).center({ lat: 12.735042, lon: -85.232663 });
+
+    // Attribute map
+    map.ui.attribution.add()
+        .content('<a href="http://mapbox.com/about/maps">Terms &amp; Feedback</a>');
+</script>
+
 {%endblock%}
 {%block content%}
     <section class="titulo interna">
@@ -18,6 +65,9 @@
     </section> 
 
     <section class="contenido">
+
+
+
       <div class="container">
         <div class="row">
           <div class="span2">
@@ -48,17 +98,23 @@
               <form class="form-inline" action="." method="POST">
                 {%csrf_token%}
                 <div class="selects">
-                  {{form.tipo_organizacion_mercado}}<br>{{form.tipo_organizacion_mercado.errors}}
-                  {{form.periodicidad}}<br>{{form.periodicidad.errors}}
-                  {{form.productos_procesados}}<br>{{form.productos_procesados.errors}}
-                  {{form.productos_frescos}}<br>{{form.productos_frescos.errors}}
+
+                  {{form.tipo_organizacion_mercado}}
+                  {{form.tipo_organizacion_mercado.errors}}
+                  {{form.periodicidad}}
+                  {{form.periodicidad.errors}}
+                  {{form.productos_procesados}}
+                  {{form.productos_procesados.errors}}
+                  {{form.productos_frescos}}
+                  {{form.productos_frescos.errors}}
                   
                </div>  
                <button type="submit" class="boton">Actualizar</button>
               </form>
-              {{lista}}
+              {{muni.all}}
               <div class="mapa-interno">
-                 <iframe width='745' height='470' frameBorder='0' src='http://a.tiles.mapbox.com/v3/byroncorrales.map-tcxnk6dp.html#8/12.49800000000003/-85.226'></iframe>
+
+                 <div id='map'></div>
               </div>
             </div>
           </div>

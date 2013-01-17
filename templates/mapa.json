@@ -1,0 +1,23 @@
+{
+    "type": "FeatureCollection",
+    "features": [ 
+      {%for m in muni%}
+        {   
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [{{m.longitud}},{{m.latitud}}]},
+            "properties": {
+                "title": "{{m.nombre}}",
+                "marker-symbol": "warehouse",
+                "marker-color" : "#f63a39"
+            }
+        }
+        {%if muni.count > 1%}
+            {%if forloop.last%}
+            {%else%}
+                ,
+            {%endif%}
+        {%endif%}
+      {%endfor%}
+    ]
+}
+
