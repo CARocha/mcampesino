@@ -163,11 +163,13 @@ def mandar_info_producto(request):
 	listafecha = []
 	nombre = []
 	medida = []
+	listaVolumen = []
 	for x in datos:
 		lista1.append(x.precio_promedio)
 		lista2.append(x.precio_municipal)
 		nombre.append(x.fkmovimiento.nombre_mercado.nombre_mercado)
 		medida.append(x.producto_fresco.unidad)
+		listaVolumen.append(x.volumen_venta_global)
 		if x.fkmovimiento.fecha.month == 1:
 			listafecha.append(str(x.fkmovimiento.fecha.day)+"-Ene-"+str(x.fkmovimiento.fecha.year))
 		elif x.fkmovimiento.fecha.month == 2:
@@ -195,5 +197,5 @@ def mandar_info_producto(request):
 
 	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2,
 		                      listaf=listafecha,nombre=list(set(nombre)),
-		                      medida=list(set(medida))))
+		                      medida=list(set(medida)), volum=listaVolumen))
 	return HttpResponse(mensaje, mimetype='application/json')	

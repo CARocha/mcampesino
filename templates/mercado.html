@@ -21,17 +21,21 @@
 
 function myFunction(value,titulo)
 {
-  var jajaja = "container-" + value;
+  
+  var contenedor1 = "container-" + value;
+  var contenedor2 = "container2-" + value;
   var nombre = value;
   var texto = "Precios del " + titulo;
+  var textovolumen = "Volumen de venta global del " + titulo
   //alert(loqusea);
-  $(".grafito").attr("id",jajaja);
+  $(".grafito").attr("id",contenedor1);
+  $(".grafito1").attr("id",contenedor2);
   $.post('/traemelosdatos/',{nombre:nombre}, function (data){  
     var chart;
-    var medi = "C$ cordobas por" + data.medida;
+    var medi = "C$ cordobas por " + data.medida;
     chart = new Highcharts.Chart({
             chart: {
-                renderTo: jajaja,
+                renderTo: contenedor1,
                 type: 'line',
                 marginRight: 130,
                 marginBottom: 25
@@ -85,10 +89,84 @@ function myFunction(value,titulo)
                 name: 'Precio municipal',
                 data: data.fresco2
             }]
-        }); 
+        }); //cierra el chart
+        //comienza el otro chart
+        var chart2;
+        chart2 = new Highcharts.Chart({
+            chart: {
+                renderTo: contenedor2,
+                zoomType: 'x',
+                spacingRight: 20
+            },
+            credits: {
+               text: '',
+            },
+            title: {
+                text: textovolumen
+            },
+            subtitle: {
+                text: data.nombre
+            },
+            xAxis: {
+                type: 'datetime',
+                maxZoom: 14 * 24 * 3600000, // fourteen days
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                title: {
+                    text: data.medida
+                },
+                showFirstLabel: false
+            },
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, 'rgba(2,0,0,0)']
+                        ]
+                    },
+                    lineWidth: 1,
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                radius: 5
+                            }
+                        }
+                    },
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+    
+            series: [{
+                type: 'area',
+                name: data.medida,
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: Date.UTC(2006, 0, 01),
+                data: data.volum
+            }]
+        });
 
     //funcion post cierra 
   });
+  return false;
 }
 
     $(document).ready(function() {
@@ -185,21 +263,22 @@ function myFunction(value,titulo)
                     {%if productos_frescos.count > 6%}
                     <ul class="bxslider">
                       {% for fresco in lista1 %}
-                        <li><a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <li><a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}')">
                         <img src="{{fresco.2.url_60x60}}" class="img-circle">{{fresco.1}}
                         </a></li>
                       {% endfor %}
                     </ul>
                     {%else%}
                       {% for fresco in lista1 %}
-                        <a href="#" class="btn btn-producto" onclick="myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}')">
                         <img src="{{fresco.2.url_60x60}}" class="img-circle"><br>{{fresco.1}}
                         </a>
                         
                       {% endfor %}
                       
                     {%endif%}
-                     <div class="grafito" style="min-width: 200px; height: 300px; margin: 0 auto"></div>        
+                     <div class="grafito" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
+                     <div class="grafito1" style="min-width: 200px; height: 300px; margin: 0 auto"></div>          
                   </div>
                   <div class="tab-pane" id="productos-procesados">
                     {%if productos_procesados.count > 6%}
