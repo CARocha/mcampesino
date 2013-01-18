@@ -36,7 +36,7 @@ $(document).ready(function(){
                 forms2.append('<tr id="line_p'+u+'">');
                 var select = $('<select name="productp-'+u+'"></select>').appendTo(forms2);
                 $('<option value"'+u+'">'+data.procesado[u]+'</option>').appendTo(select);
-                var unidad = $('<td><input type="text" value=0 name="unidad-'+u+'" value="'+data.unidadp[u]+'" readonly/></td>').appendTo(forms2);
+                var unidad = $('<td><input type="text" name="unidad-'+u+'" value="'+data.unidadp[u]+'" readonly/></td>').appendTo(forms2);
                 var volumen_venta = $('<td><input value=0 type="text" name="volumenp-'+u+'" /></td>').appendTo(forms2);
                 var precio_promedio = $('<td><input value=0 type="text" name="promediop-'+u+'" /></td>').appendTo(forms2);
                 var precio_municipal = $('<td><input  value=0 type="text" name="municipalp-'+u+'" /></td>').appendTo(forms2);

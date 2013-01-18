@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
+from django.utils import simplejson as json
+from django.template.loader import get_template
+from django.template import Context
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
 from mercados.models import *
 from lugar.models import *
 from productos.models import *
-from movimientos.models import *
-from movimientos.forms import *
-from django.utils import simplejson as json
-from django.template.loader import get_template
-from django.template import Context
+from .models import Movimiento, MovimientoProductosFresco, MovimientoProductosProcesados
+from .forms import *
+
 
 
 def reqdata(request):
@@ -170,24 +171,28 @@ def mapa_mercado(request):
 			          obj.productos_procesados,
 			          obj.productos_frescos,
 			          obj.id
-			        ]) 
+			        ])
+	dpto = Departamento.objects.all().exclude(nombre__contains="cobertura nacional")
+
 	return render_to_response('explorare.html', locals(), 
 		                       context_instance=RequestContext(request))
 
 def obtener_mapa(request):
     if request.is_ajax():
         lista = []
-        params = _queryset_filtrado(request)
-        for objeto in params.distinct():
+        #params = _queryset_filtrado(request)
+        params = ActividadMercado.objects.filter(fkmercado__departamento__id=request.POST['depart'])
+        for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
                 	    id=objeto.id,
-                        lon=float(objeto.fkmercado.longitud) , 
-                        lat=float(objeto.fkmercado.latitud),
-                        propiedad=objeto.periodicidad,
+                        lon=float(objeto.fkmercado.municipio.longitud) , 
+                        lat=float(objeto.fkmercado.municipio.latitud),
+                        periodicidad=objeto.periodicidad.nombre,
+                        modalidad=objeto.get_modalidad_display(),
                         )
             lista.append(dicc)
 
-        serializado = simplejson.dumps(lista)
+        serializado = json.dumps(lista)
     	return HttpResponse(serializado, mimetype='application/json')
 
 def test_mapa(request):
