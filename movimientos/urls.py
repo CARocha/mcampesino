@@ -9,6 +9,7 @@ urlpatterns = patterns('movimientos.views',
 	url(r'^reqdata/$', 'reqdata', name="reqdata"),
 	url(r'^traemelosdatos/$', 'mandar_info_producto', name="mandar-info-producto"),
 	url(r'^traemelosdatosmas/$', 'mandar_info_procesado', name="mandar-info-procesado"),
+	url(r'^mercado_mapa/$', 'mapa_mercado', name="mapa-mercado"),
 
 )
 

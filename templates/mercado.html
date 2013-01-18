@@ -396,7 +396,7 @@ function mySecondFunction(value,titulo)
                      <div class="grafito1" style="min-width: 200px; height: 300px; margin: 0 auto"></div>          
                   </div>
                   <div class="tab-pane" id="productos-procesados">
-                    {%if productos_procesados.count > 6%}
+                    {%if lista2|length > 6%}
                     <ul class="bxslider">
                       {% for proce in lista2 %}
                         <li><a href="#" class="btn btn-producto" onclick="return mySecondFunction('{{proce.0}}','{{proce.1}}')">

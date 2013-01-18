@@ -143,6 +143,37 @@ def explorar(request):
 	return render_to_response('explora.html', {'form':form,'lista':lista},
 		                      context_instance=RequestContext(request))
 
+def mapa_mercado(request):
+	if request.method == 'POST':
+		form = ActividadForm(request.POST)
+		if form.is_valid():
+			request.session['tipo_organizacion_mercado'] = form.cleaned_data['tipo_organizacion_mercado']            
+			request.session['periodicidad'] = form.cleaned_data['periodicidad']
+			request.session['productos_procesados'] = form.cleaned_data['productos_procesados']
+			request.session['productos_frescos'] = form.cleaned_data['productos_frescos']
+			bandera = 1
+	else:
+		form = ActividadForm()
+		bandera = 0
+	lista = []
+	if bandera == 1:
+		con = _queryset_filtrado(request)
+	else:
+		request.session['tipo_organizacion_mercado'] = None          
+		request.session['periodicidad'] = None 
+		request.session['productos_procesados'] = None
+		request.session['productos_frescos'] = None  
+		con = ActividadMercado.objects.all()
+	for obj in con:
+		lista.append([obj.tipo_organizacion_mercado,
+			          obj.periodicidad,
+			          obj.productos_procesados,
+			          obj.productos_frescos,
+			          obj.id
+			        ]) 
+	return render_to_response('explorare.html', locals(), 
+		                       context_instance=RequestContext(request))
+
 def obtener_mapa(request):
     if request.is_ajax():
         lista = []
