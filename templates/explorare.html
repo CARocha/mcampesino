@@ -10,14 +10,66 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+
+  var styles = [
+  {
+  "featureType": "road",
+  "stylers": [
+  { "hue": "#00ddff" },
+  { "lightness": 45 },
+  { "visibility": "off" }
+  ]
+  },{
+  "stylers": [
+  { "weight": 0.3 }
+  ]
+  },{
+  "featureType": "water",
+  "stylers": [
+  { "hue": "#00d4ff" },
+  { "saturation": -33 },
+  { "lightness": 3 },
+  { "gamma": 1.11 }
+  ]
+  },{
+  "featureType": "landscape.natural",
+  "stylers": [
+  { "saturation": 12 },
+  { "hue": "#b2ff00" },
+  { "gamma": 0.97 }
+  ]
+  },{
+  "featureType": "administrative",
+  "elementType": "labels.text.fill",
+  "stylers": [
+  { "hue": "#ff9100" }
+  ]
+  },{
+  }
+  ];
+
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var styledMap = new google.maps.StyledMapType(styles,
+  {name: "Styled Map"});
+
+
   var mapOptions = {
         center: new google.maps.LatLng(12.877, -85.001),
         zoom: 7,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        //mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+        }
       }
       var map = new google.maps.Map(document.getElementById('map'),
                                     mapOptions);
-        //comineza para mostrar mapa
+
+      //Associate the styled map with the MapTypeId and set it to display.
+      map.mapTypes.set('map_style', styledMap);
+      map.setMapTypeId('map_style');
+
+      //comineza para mostrar mapa
       $.post('/ver_mapa_completo/', function(data){
           $.each(data, function(i, elemento){
               var latlng = new google.maps.LatLng(elemento.lat, elemento.lon);
@@ -46,13 +98,62 @@ $(document).ready(function() {
 
 //empieza el mapa 
  function myMapa(value) {
+
+  var styles = [
+  {
+  "featureType": "road",
+  "stylers": [
+  { "hue": "#00ddff" },
+  { "lightness": 45 },
+  { "visibility": "off" }
+  ]
+  },{
+  "stylers": [
+  { "weight": 0.3 }
+  ]
+  },{
+  "featureType": "water",
+  "stylers": [
+  { "hue": "#00d4ff" },
+  { "saturation": -33 },
+  { "lightness": 3 },
+  { "gamma": 1.11 }
+  ]
+  },{
+  "featureType": "landscape.natural",
+  "stylers": [
+  { "saturation": 12 },
+  { "hue": "#b2ff00" },
+  { "gamma": 0.97 }
+  ]
+  },{
+  "featureType": "administrative",
+  "elementType": "labels.text.fill",
+  "stylers": [
+  { "hue": "#ff9100" }
+  ]
+  },{
+  }
+  ];
+
+  // Create a new StyledMapType object, passing it the array of styles,
+  // as well as the name to be displayed on the map type control.
+  var styledMap = new google.maps.StyledMapType(styles,
+  {name: "Styled Map"});
+
   var mapOptions = {
     center: new google.maps.LatLng(12.877, -85.001),
     zoom: 7,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+        }
   }
   var map = new google.maps.Map(document.getElementById('map'),
   mapOptions);
+
+  map.mapTypes.set('map_style', styledMap);
+  map.setMapTypeId('map_style'); 
+
   var depart = value;
 //comineza para mostrar mapa
   $.post('/ver_mapa/',{depart:depart}, function(data){
