@@ -109,6 +109,7 @@ $(document).ready(function() {
         });
     });
   });
+  return false;
 } // fin de la funcion myMapa
 </script>
 
@@ -134,7 +135,7 @@ $(document).ready(function() {
             <div class="sidebar-mapa">
               <a href="/mercado_mapa/" class="on">Toda Nicaragua</a>
               {% for departamento in dpto %}
-                <a href="#" onclick="myMapa('{{departamento.id}}')">{{departamento}}</a>
+                <a href="#" onclick="return myMapa('{{departamento.id}}')">{{departamento}}</a>
               {% endfor %}
               <div class="clearfix"></div>
               <br>
