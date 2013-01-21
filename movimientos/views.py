@@ -110,6 +110,14 @@ def _queryset_filtrado(request):
 		params['productos_procesados'] = request.session['productos_procesados']
 	if 'productos_frescos' in request.session:
 		params['productos_frescos'] = request.session['productos_frescos']
+
+	unvalid_keys = []
+	for key in params:
+		if not params[key]:
+			unvalid_keys.append(key)
+    
+	for key in unvalid_keys:
+		del params[key]
     
 	return ActividadMercado.objects.filter(**params)
 
@@ -177,10 +185,28 @@ def mapa_mercado(request):
 	return render_to_response('explorare.html', locals(), 
 		                       context_instance=RequestContext(request))
 
+def mapa_completo(request):
+    if request.is_ajax():
+        lista = []
+        params = ActividadMercado.objects.all()
+        for objeto in params:
+            dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
+                	    id=objeto.id,
+                        lon=float(objeto.fkmercado.municipio.longitud) , 
+                        lat=float(objeto.fkmercado.municipio.latitud),
+                        periodicidad=objeto.periodicidad.nombre,
+                        modalidad=objeto.get_modalidad_display(),
+                        )
+            lista.append(dicc)
+
+        serializado = json.dumps(lista)
+    	return HttpResponse(serializado, mimetype='application/json')
+
+
 def obtener_mapa(request):
     if request.is_ajax():
         lista = []
-        #params = _queryset_filtrado(request)
+        print _queryset_filtrado(request)
         params = ActividadMercado.objects.filter(fkmercado__departamento__id=request.POST['depart'])
         for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
