@@ -129,12 +129,12 @@ def explorar(request):
 			request.session['periodicidad'] = form.cleaned_data['periodicidad']
 			request.session['productos_procesados'] = form.cleaned_data['productos_procesados']
 			request.session['productos_frescos'] = form.cleaned_data['productos_frescos']
-			bandera = 1
+			request.session['bandera'] = 1
 	else:
 		form = ActividadForm()
-		bandera = 0
+		request.session['bandera'] = 0
 	lista = []
-	if bandera == 1:
+	if request.session['bandera'] == 1:
 		con = _queryset_filtrado(request)
 	else:
 		request.session['tipo_organizacion_mercado'] = None          
@@ -160,12 +160,12 @@ def mapa_mercado(request):
 			request.session['periodicidad'] = form.cleaned_data['periodicidad']
 			request.session['productos_procesados'] = form.cleaned_data['productos_procesados']
 			request.session['productos_frescos'] = form.cleaned_data['productos_frescos']
-			bandera = 1
+			request.session['bandera'] = 1
 	else:
 		form = ActividadForm()
-		bandera = 0
+		request.session['bandera'] = 0
 	lista = []
-	if bandera == 1:
+	if request.session['bandera'] == 1:
 		con = _queryset_filtrado(request)
 	else:
 		request.session['tipo_organizacion_mercado'] = None          
@@ -188,7 +188,12 @@ def mapa_mercado(request):
 def mapa_completo(request):
     if request.is_ajax():
         lista = []
-        params = ActividadMercado.objects.all()
+        params = []
+        if request.session['bandera'] == 1:
+        	params = _queryset_filtrado(request)
+        else:
+        	params = ActividadMercado.objects.all()
+
         for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
                 	    id=objeto.id,
@@ -206,8 +211,12 @@ def mapa_completo(request):
 def obtener_mapa(request):
     if request.is_ajax():
         lista = []
-        print _queryset_filtrado(request)
-        params = ActividadMercado.objects.filter(fkmercado__departamento__id=request.POST['depart'])
+        consulta = _queryset_filtrado(request)
+        params = []
+        if request.session['bandera'] == 1:
+        	params = consulta.filter(fkmercado__departamento__id=request.POST['depart'])
+        else:
+        	params = ActividadMercado.objects.filter(fkmercado__departamento__id=request.POST['depart'])
         for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
                 	    id=objeto.id,
