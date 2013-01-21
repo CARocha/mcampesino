@@ -11,42 +11,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 
-  var styles = [
-  {
-  "featureType": "road",
-  "stylers": [
-  { "hue": "#00ddff" },
-  { "lightness": 45 },
-  { "visibility": "off" }
-  ]
-  },{
-  "stylers": [
-  { "weight": 0.3 }
-  ]
-  },{
-  "featureType": "water",
-  "stylers": [
-  { "hue": "#00d4ff" },
-  { "saturation": -33 },
-  { "lightness": 3 },
-  { "gamma": 1.11 }
-  ]
-  },{
-  "featureType": "landscape.natural",
-  "stylers": [
-  { "saturation": 12 },
-  { "hue": "#b2ff00" },
-  { "gamma": 0.97 }
-  ]
-  },{
-  "featureType": "administrative",
-  "elementType": "labels.text.fill",
-  "stylers": [
-  { "hue": "#ff9100" }
-  ]
-  },{
-  }
-  ];
+  var styles = [ { "featureType": "road", "stylers": [ { "visibility": "off" }, { "hue": "#ff0000" } ] },{ "featureType": "administrative", "stylers": [ { "hue": "#c3ff00" }, { "saturation": 10 } ] },{ "stylers": [ { "lightness": 10 }, { "hue": "#00ffaa" } ] },{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [ { "color": "#fcf7f4" } ] },{ "featureType": "administrative.province", "elementType": "geometry.stroke" },{ } ]
 
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
@@ -99,42 +64,7 @@ $(document).ready(function() {
 //empieza el mapa 
  function myMapa(value) {
 
-  var styles = [
-  {
-  "featureType": "road",
-  "stylers": [
-  { "hue": "#00ddff" },
-  { "lightness": 45 },
-  { "visibility": "off" }
-  ]
-  },{
-  "stylers": [
-  { "weight": 0.3 }
-  ]
-  },{
-  "featureType": "water",
-  "stylers": [
-  { "hue": "#00d4ff" },
-  { "saturation": -33 },
-  { "lightness": 3 },
-  { "gamma": 1.11 }
-  ]
-  },{
-  "featureType": "landscape.natural",
-  "stylers": [
-  { "saturation": 12 },
-  { "hue": "#b2ff00" },
-  { "gamma": 0.97 }
-  ]
-  },{
-  "featureType": "administrative",
-  "elementType": "labels.text.fill",
-  "stylers": [
-  { "hue": "#ff9100" }
-  ]
-  },{
-  }
-  ];
+  var styles = [ { "featureType": "road", "stylers": [ { "visibility": "off" }, { "hue": "#ff0000" } ] },{ "featureType": "administrative", "stylers": [ { "hue": "#c3ff00" }, { "saturation": 10 } ] },{ "stylers": [ { "lightness": 10 }, { "hue": "#00ffaa" } ] },{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [ { "color": "#fcf7f4" } ] },{ "featureType": "administrative.province", "elementType": "geometry.stroke" },{ } ];
 
   // Create a new StyledMapType object, passing it the array of styles,
   // as well as the name to be displayed on the map type control.
