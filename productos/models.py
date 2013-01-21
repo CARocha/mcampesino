@@ -23,7 +23,7 @@ class ProductosFrescos(models.Model):
 		verbose_name_plural = 'Productos frescos'
 
 	def __unicode__(self):
-		return u'%s || medida: %s' % (self.nombre, self.unidad)
+		return self.nombre
 
 class ProductosProcesados(models.Model):
 	nombre = models.CharField(max_length=200)
@@ -38,4 +38,4 @@ class ProductosProcesados(models.Model):
 		verbose_name_plural = 'Productos procesados'
 
 	def __unicode__(self):
-		return u'%s || unidad: %s' % (self.nombre, self.unidad)
+		return self.nombre
