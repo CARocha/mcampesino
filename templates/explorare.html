@@ -154,7 +154,7 @@ $(document).ready(function() {
             <div class="sidebar-mapa">
               <a href="/mercado_mapa/" class="on">Toda Nicaragua</a>
               {% for departamento in dpto %}
-                <a id="dept{{departamento.id}}" href="#" onclick="return myMapa('{{departamento.id}}')">{{departamento}}</a>
+                <a id="dept{{departamento.departamento.id}}" href="#" onclick="return myMapa('{{departamento.departamento.id}}')">{{departamento.departamento.nombre}}</a>
               {% endfor %}
               <div class="clearfix"></div>
               <br>

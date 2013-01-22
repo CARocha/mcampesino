@@ -180,8 +180,8 @@ def mapa_mercado(request):
 			          obj.productos_frescos,
 			          obj.id
 			        ])
-	dpto = Departamento.objects.all().exclude(nombre__contains="cobertura nacional")
-
+	dpto = RegistroMercado.objects.all()
+	
 	return render_to_response('explorare.html', locals(), 
 		                       context_instance=RequestContext(request))
 
@@ -231,19 +231,7 @@ def obtener_mapa(request):
     	return HttpResponse(serializado, mimetype='application/json')
 
 def test_mapa(request):
- #    lista = []
- #    params = Municipio.objects.all()
- #    print Municipio.objects.all()
- #    for objeto in Municipio.objects.all():
- #    	print objeto
- #        dicc = dict(nombre=objeto.nombre, 
- #            	    id=objeto.id,
- #                    lon=float(objeto.longitud) , 
- #                    lat=float(objeto.latitud),
- #                    )
- #        lista.append(dicc)
-	# serializado = json.dumps(lista)
-	# return HttpResponse(serializado, mimetype='application/json')
+
     muni = Municipio.objects.all()[0:55]
     context = {
                'muni': muni,
