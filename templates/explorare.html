@@ -71,9 +71,23 @@ $(document).ready(function() {
   var styledMap = new google.maps.StyledMapType(styles,
   {name: "Styled Map"});
 
+  var depart = value;
+  var latitud;
+  var longitud;
+      $.ajax({
+        type:'POST',
+        url: '/posicion_mapa/',
+        data:{depart:depart},
+        async:false,
+        success:function(data){
+          latitud = (data[0].lat); 
+          longitud = (data[0].lon);
+      }
+    });
+
   var mapOptions = {
-    center: new google.maps.LatLng(12.877, -85.001),
-    zoom: 7,
+    center: new google.maps.LatLng(latitud, longitud),
+    zoom: 10,
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
         }

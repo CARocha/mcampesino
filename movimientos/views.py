@@ -344,4 +344,15 @@ def mandar_info_procesado(request):
 	mensaje = json.dumps(dict(fresco=lista1,fresco2=lista2,
 		                      listaf=listafecha,nombre=list(set(nombre)),
 		                      medida=list(set(medida)), volum=listaVolumen))
-	return HttpResponse(mensaje, mimetype='application/json')	
+	return HttpResponse(mensaje, mimetype='application/json')
+
+def posicion_mapa(request):
+	lista = [] 
+	for objeto in ActividadMercado.objects.filter(fkmercado__departamento__id=request.POST['depart']):	
+		dicc = dict( 
+			lon=float(objeto.fkmercado.municipio.longitud) , 
+			lat=float(objeto.fkmercado.municipio.latitud),
+		)
+		lista.append(dicc)
+	serializado = json.dumps(lista)
+	return HttpResponse(serializado, mimetype='application/json')	
