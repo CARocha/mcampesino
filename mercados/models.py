@@ -74,7 +74,7 @@ class RegistroMercado(models.Model):
 class Fotos(models.Model):
 	nombre = models.CharField(max_length=150)
 	picture = ImageWithThumbsField(upload_to=get_file_path,
-		                           sizes=((460,260),(200,200)),
+		                           sizes=((460,260),(445,260),(200,200)),
 		                           null=True, blank=True)
 
 	fk_mercado = models.ForeignKey(RegistroMercado)

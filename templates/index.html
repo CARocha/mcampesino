@@ -29,18 +29,8 @@
 
               Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Maecenas faucibus mollis interdum.
             </p>
-            <p>
-              <div class="semititle">UNA COLABORACIÓN DE</div>
-            </p>
-            <p>
-              <center>
-                <img src="{{ STATIC_URL }}img/logocolaboradores.png">
-              </center>
-            </p>
-          </div>
-          <div class="span6 caracteristicas">
-            
-              <div class="semititle">CARACTERISTICAS</div>
+
+            <div class="semititle">CARACTERISTICAS</div>
             
             <div class="caracteristica c1">
               <b>Georeferenciacion de mercados</b><br>
@@ -54,43 +44,49 @@
               <b>Relaciones de actores</b><br>
                  Etiam porta sem malesuada magna mollis euismod. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas faucibus mollis interdum
             </div>
+
+            <p>
+              <div class="semititle">UNA COLABORACIÓN DE</div>
+            </p>
+            <p>
+              <center>
+                <img src="{{ STATIC_URL }}img/logocolaboradores.png">
+              </center>
+            </p>
           </div>
-        </div>
-      </div> <!-- /container -->
-    </section> 
-
-    <section class="mercados-index">
-      <div class="separador-seccion">
-        ULTIMOS MERCADOS REGISTRADOS
-      </div>
-      <div class="lista-mercados">
-        <div class="container">
-          <div class="row">
-            <div class="span12">
-
+          <div class="span6">
+            <div class="semititle">ULTIMOS MERCADOS REGISTRADOS</div>
+            <div class="mercados">
               {% for mercado in mercados  %}
                 <div class="mercado-elemento">
                   <center>
-                    <a href="#">
+                    <a href="ver_mercado/{{mercado.id}}">
                       <span class="badge badge-important">{{mercado.departamento}}</span>
                     </a>
                   </center>
-                  <a href="ver_mercado/{{mercado.id}}" class="mercado"> 
-                      <img class="imagen-mercado" src="{{mercado.foto.0.picture.url_460x260}}" alt="{{mercado.nombre_mercado}}" />
+                  <a href="ver_mercado/{{mercado.id}}" class="mercado">
+                    {%if mercado.foto.0.picture%}
+                      <img class="imagen-mercado" src="{{mercado.foto.0.picture.url_445x260}}" alt="{{mercado.nombre_mercado}}" />
+                    {%else%}
+                       <img class="imagen-mercado" src="{{STATIC_URL}}img/nofotomercado.png" alt="{{mercado.nombre_mercado}}" />
+                    {%endif%}
                     <div class="titulo-mercado">{{mercado.nombre_mercado}}</div>
                   </a>
                   <center>
                      <div class="sombra-mercado"></div>
                   </center>
                 </div>
-                
               {% empty %}
                   <p>No existen mercados registrados</p>
               {% endfor %}
-
+              <div class="clearfix"></div>
+              <br><br>
+              
+              <a href="/lista-mercados/" class="btn btn-success">Ver lista de mercados</a>
+            
             </div>
           </div>
-        </div> <!-- /container -->
-      </div>  
-    </section>
+        </div>
+      </div> <!-- /container -->
+    </section> 
 {%endblock%}

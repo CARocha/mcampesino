@@ -342,3 +342,9 @@ def posicion_mapa(request):
 		lista.append(dicc)
 	serializado = json.dumps(lista)
 	return HttpResponse(serializado, mimetype='application/json')	
+
+def lista_mercados(request):
+	mercados = RegistroMercado.objects.all().order_by('departamento')
+	departamentos = Departamento.objects.all()
+	return render_to_response('lista_mercados.html', locals(), 
+		                       context_instance=RequestContext(request))
