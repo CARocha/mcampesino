@@ -349,7 +349,7 @@ function mySecondFunction(value,titulo)
       <div class="container">
         <div class="row">
           <div class="span12">
-            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periocidad</b>{% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%}{{periodo.periodicidad}}{%endif%} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organización</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%} {{periodo.get_modalidad_display}}{%endif%} {%endfor%}
+            <b>Departamento</b> {{mercado.departamento}} &nbsp;|&nbsp; <b>Municipio</b> {{mercado.municipio}} &nbsp;|&nbsp; <b>Periodicidad</b>{% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%}{{periodo.periodicidad}}{%endif%} {%endfor%} &nbsp;|&nbsp; <b>Contacto</b> {{mercado.fkregistro.nombre_persona}} {{mercado.fkregistro.telefono}} &nbsp;|&nbsp; <b>Organización</b> {{mercado.fkregistro.nombre_organizacion}} &nbsp;|&nbsp; <b>Modalidad</b> {% for periodo in mercado.actividadmercado_set.all %} {%if forloop.first%} {{periodo.get_modalidad_display}}{%endif%} {%endfor%}
           </div>
         </div>
       </div> <!-- /container -->
