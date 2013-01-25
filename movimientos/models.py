@@ -21,11 +21,6 @@ def get_file_path(intance,filename):
 class Movimiento(models.Model):
 	nombre_mercado = models.ForeignKey(RegistroMercado)
 	fecha = models.DateField('Fecha de reporte')
-	#nombre_persona = models.CharField('Nombre de persona que registra informacion'
-	#	                              , max_length=200)
-	#organizacion_persona = models.CharField('Organizacion de la persona que registra Movimiento',max_length=200)
-	#correo = models.EmailField(null=True, blank=True)
-	#telefono = models.IntegerField(null=True, blank=True)
 	usuario = models.ForeignKey(User)
 
 	class Meta:
