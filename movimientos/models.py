@@ -47,6 +47,8 @@ class MovimientoProductosFresco(models.Model):
 	class Meta:
 		verbose_name_plural = "Movimiento de productos frescos"
 
+	def __unicode__(self):
+		return u'producto: %s || medida: %s' % (self.producto_fresco.nombre, self.producto_fresco.unidad)
 
 class MovimientoProductosProcesados(models.Model):
 	fkmovimiento = models.ForeignKey(Movimiento)
@@ -58,3 +60,6 @@ class MovimientoProductosProcesados(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Movimiento de productos procesados"
+
+	def __unicode__(self):
+		return u'producto: %s || medida: %s' % (self.fkproducto_fresco.nombre, self.fkproducto_fresco.unidad)
