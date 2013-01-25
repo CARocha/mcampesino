@@ -25,6 +25,9 @@ class ProductosFrescos(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
+	def fresco_unidad(self):
+		return u'%s || %s' % (self.nombre,self.unidad)
+
 class ProductosProcesados(models.Model):
 	nombre = models.CharField(max_length=200)
 	unidad = models.CharField(max_length=15, null=True, blank=True)
@@ -39,3 +42,6 @@ class ProductosProcesados(models.Model):
 
 	def __unicode__(self):
 		return self.nombre
+
+	def procesado_unidad(self):
+		return u'%s || %s' % (self.nombre,self.unidad)
