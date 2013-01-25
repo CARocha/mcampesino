@@ -19,18 +19,18 @@
       $('#prodcutos-procesados').addClass('active');
     });
 
-function myFunction(value,titulo)
+function myFunction(value,producto,mercado)
 {
   
   var contenedor1 = "container-" + value;
   var contenedor2 = "container2-" + value;
   var nombre = value;
-  var texto = "Precios del " + titulo;
-  var textovolumen = "Volumen de venta global del " + titulo
+  var texto = "Precios del " + producto;
+  var textovolumen = "Volumen de venta global del " + producto
   //alert(loqusea);
   $(".grafito").attr("id",contenedor1);
   $(".grafito1").attr("id",contenedor2);
-  $.post('/traemelosdatos/',{nombre:nombre}, function (data){  
+  $.post('/traemelosdatos/',{nombre:nombre,mercado:mercado}, function (data){  
     var chart;
     var medi = "C$ cordobas por " + data.medida;
     chart = new Highcharts.Chart({
@@ -154,7 +154,7 @@ function myFunction(value,titulo)
   return false;
 }
 
-function mySecondFunction(value,titulo)
+function mySecondFunction(value,titulo,mercado)
 {
   
   var contenedor1 = "container-" + value;
@@ -165,7 +165,7 @@ function mySecondFunction(value,titulo)
   //alert(loqusea);
   $(".grafi1").attr("id",contenedor1);
   $(".grafi2").attr("id",contenedor2);
-  $.post('/traemelosdatosmas/',{nombre:nombre}, function (data){  
+  $.post('/traemelosdatosmas/',{nombre:nombre,mercado:mercado}, function (data){  
     var chart;
     var medi = "C$ cordobas por " + data.medida;
     chart = new Highcharts.Chart({
@@ -378,14 +378,14 @@ function mySecondFunction(value,titulo)
                     {%if lista1|length > 6%}
                     <ul class="bxslider">
                       {% for fresco in lista1 %}
-                        <li><a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <li><a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}','{{mercado.id}}')">
                         <img src="{{fresco.2.url_60x60}}" class="img-circle">{{fresco.1}}
                         </a></li>
                       {% endfor %}
                     </ul>
                     {%else%}
                       {% for fresco in lista1 %}
-                        <a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}')">
+                        <a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}','{{mercado.id}}')">
                         <img src="{{fresco.2.url_60x60}}" class="img-circle"><br>{{fresco.1}}
                         </a>
                         
@@ -399,14 +399,14 @@ function mySecondFunction(value,titulo)
                     {%if lista2|length > 6%}
                     <ul class="bxslider">
                       {% for proce in lista2 %}
-                        <li><a href="#" class="btn btn-producto" onclick="return mySecondFunction('{{proce.0}}','{{proce.1}}')">
+                        <li><a href="#" class="btn btn-producto" onclick="return mySecondFunction('{{proce.0}}','{{proce.1}}','{{mercado.id}}')">
                         <img src="{{proce.2.url_60x60}}" class="img-circle">{{proce.1}}
                         </a></li>
                       {% endfor %}
                       </ul>
                       {%else%}
                       {% for proce in lista2 %}
-                        <a href="#" class="btn btn-producto" onclick="return mySecondFunction('{{proce.0}}','{{proce.1}}')">
+                        <a href="#" class="btn btn-producto" onclick="return mySecondFunction('{{proce.0}}','{{proce.1}}','{{mercado.id}}')">
                         <img src="{{proce.2.url_60x60}}" class="img-circle"><br>{{proce.1}}
                         </a>
                       {% endfor %}

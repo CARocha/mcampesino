@@ -33,10 +33,3 @@ class MovimientoForm(ModelForm):
 	class Meta:
 		model = Movimiento
 		fields = ('nombre_mercado','fecha',)
-
-
-class MovimientoProductosFrescoForm(forms.ModelForm):
-
-	class Meta:
-		model = MovimientoProductosFresco
-		exclude = ('fkmovimiento',)

@@ -83,8 +83,6 @@ def index(request):
 
 def ver_mercado(request,id):
 	mercado = get_object_or_404(RegistroMercado, id=id)
-	productos_frescos = ProductosFrescos.objects.all()
-	productos_procesados = ProductosProcesados.objects.all()
 
 	lista1 = {}
 	for mer in mercado.actividadmercado_set.all():
@@ -94,9 +92,7 @@ def ver_mercado(request,id):
 	for mer in mercado.actividadmercado_set.all():
 		lista2 = [(x.id,x.nombre,x.picture) for x in mer.productos_procesados.all()]
 
-	return render_to_response('mercado.html', {'mercado':mercado, 
-							  'productos_frescos':productos_frescos,
-							  'productos_procesados':productos_procesados,
+	return render_to_response('mercado.html', {'mercado':mercado,
 							  'lista1':lista1,'lista2':lista2},
 		                      context_instance=RequestContext(request))
 
@@ -244,7 +240,8 @@ def mandar_info_producto(request):
 	mensaje = ''
 
 	if request.is_ajax() and request.method == 'POST':
-		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST['nombre']).order_by('fkmovimiento__fecha')
+		datos = MovimientoProductosFresco.objects.filter(producto_fresco__id=request.POST['nombre'],
+			                                             fkmovimiento__nombre_mercado__id=request.POST['mercado']).order_by('fkmovimiento__fecha')
 	lista1 = []
 	lista2 = []
 	listafecha = []
@@ -291,7 +288,8 @@ def mandar_info_procesado(request):
 	mensaje = ''
 
 	if request.is_ajax() and request.method == 'POST':
-		datos = MovimientoProductosProcesados.objects.filter(fkproducto_fresco__id=request.POST['nombre']).order_by('fkmovimiento__fecha')
+		datos = MovimientoProductosProcesados.objects.filter(fkproducto_fresco__id=request.POST['nombre'],
+			                                                 fkmovimiento__nombre_mercado__id=request.POST['mercado']).order_by('fkmovimiento__fecha')
 	lista1 = []
 	lista2 = []
 	listafecha = []
