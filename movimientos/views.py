@@ -193,6 +193,7 @@ def mapa_completo(request):
         for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
                 	    id=objeto.id,
+                	    idm = float(objeto.fkmercado.id),
                         lon=float(objeto.fkmercado.municipio.longitud) , 
                         lat=float(objeto.fkmercado.municipio.latitud),
                         periodicidad=objeto.periodicidad.nombre,
@@ -216,6 +217,7 @@ def obtener_mapa(request):
         for objeto in params:
             dicc = dict(nombre=objeto.fkmercado.nombre_mercado, 
                 	    id=objeto.id,
+                	    idm = float(objeto.fkmercado.id),
                         lon=float(objeto.fkmercado.municipio.longitud) , 
                         lat=float(objeto.fkmercado.municipio.latitud),
                         periodicidad=objeto.periodicidad.nombre,

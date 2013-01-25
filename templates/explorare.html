@@ -46,10 +46,10 @@ $(document).ready(function() {
                   icon: '/files/img/fruits.png' 
               });
               google.maps.event.addListener(marker, "click", function() {
-               var html = '<b>' + elemento.nombre + 
-                          '</b><br>' + elemento.periodicidad + 
-                          '<br>' + elemento.modalidad +
-                          '<br>';
+               var html = '<b><a href="/ver_mercado/'+ elemento.idm +'" class="verde">' + elemento.nombre + 
+                          '</a></b><br><b class="gris">Periodicidad →</b> ' + elemento.periodicidad + 
+                          '<br><b class="gris">Modalidad →</b> ' + elemento.modalidad +
+                          '<br><a href="/ver_mercado/'+ elemento.idm +'" class="btn botopococ btn-mini btn-success">Ver Mercado</a>';
                 infowindow = new google.maps.InfoWindow({
                           content: html,
                           zIndex: 999,
@@ -116,10 +116,10 @@ $(document).ready(function() {
             icon: '/files/img/fruits.png' 
         });
         google.maps.event.addListener(marker, "click", function() {
-        var html = '<b>' + elemento.nombre + 
-                    '</b><br>' + elemento.periodicidad + 
-                    '<br>' + elemento.modalidad +
-                    '<br>';
+               var html = '<b><a href="/ver_mercado/'+ elemento.idm +'" class="verde">' + elemento.nombre + 
+                          '</a></b><br><b class="gris">Periodicidad →</b> ' + elemento.periodicidad + 
+                          '<br><b class="gris">Modalidad →</b> ' + elemento.modalidad +
+                          '<br><a href="/ver_mercado/'+ elemento.idm +'" class="btn botopococ btn-mini btn-success">Ver Mercado</a>';
         infowindow = new google.maps.InfoWindow({
           content: html,
           zIndex: 999,
