@@ -14,5 +14,6 @@ urlpatterns = patterns('movimientos.views',
 	url(r'^ver_mapa/$', 'obtener_mapa', name="obtener-mapa"),
 	url(r'^posicion_mapa/$', 'posicion_mapa', name="posicion-mapa"),
 	url(r'^lista-mercados/$', 'lista_mercados', name="lista_mercados"),
+	url(r'^registrate/$', 'registrar', name="registrar"),
 )
 

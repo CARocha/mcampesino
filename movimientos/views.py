@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.template import Context
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from mercados.models import *
 from lugar.models import *
 from productos.models import *
@@ -349,4 +349,16 @@ def lista_mercados(request):
 	mercados = RegistroMercado.objects.all().order_by('departamento')
 	departamentos = Departamento.objects.all()
 	return render_to_response('lista_mercados.html', locals(), 
+		                       context_instance=RequestContext(request))
+
+def registrar(request):
+	if request.method == 'POST':
+		form = UserCreateForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/')
+	else:
+		form = UserCreateForm()
+
+	return render_to_response('registration/register.html',{'form':form},
 		                       context_instance=RequestContext(request))
