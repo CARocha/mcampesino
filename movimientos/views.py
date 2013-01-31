@@ -11,8 +11,10 @@ from lugar.models import *
 from productos.models import *
 from .models import Movimiento, MovimientoProductosFresco, MovimientoProductosProcesados
 from .forms import *
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
 
-
+#salidas
 
 def reqdata(request):
 	mensaje = ''
@@ -350,3 +352,14 @@ def lista_mercados(request):
 	departamentos = Departamento.objects.all()
 	return render_to_response('lista_mercados.html', locals(), 
 		                       context_instance=RequestContext(request))
+
+def enviar_correo(algos):
+	'''
+		funcion para mandar correos notificando que hay usuario nuevo registrado
+	'''
+	site = Site.objects.get_current()
+    users = [] #.exclude(username=foros.contraparte.username)
+    contenido = render_to_string('notas/notify_new_nota.txt', {'nota': notas,
+                                 'url': '%s/notas/%s' % (site, notas.id),
+                                 })
+    send_mail('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
