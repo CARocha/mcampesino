@@ -5,11 +5,8 @@ from django import forms
 from mercados.models import *
 from productos.models import *
 from movimientos.models import *
-from django.forms.formsets import formset_factory
-from django.forms.models import inlineformset_factory
-from django.forms.models import BaseModelFormSet
-from django.forms.models import modelformset_factory
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
@@ -33,3 +30,18 @@ class MovimientoForm(ModelForm):
 	class Meta:
 		model = Movimiento
 		fields = ('nombre_mercado','fecha',)
+
+class UserCreateForm(UserCreationForm):
+    username = forms.CharField(label="Organizacion o Username", max_length=30)
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name","last_name","email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user

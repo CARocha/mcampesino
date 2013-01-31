@@ -16,7 +16,7 @@
 <script type="text/javascript">
 // Para el grafico test
     $(document).ready(function() {
-      $('#prodcutos-procesados').addClass('active');
+      $('#productos-procesados').addClass('active');
     });
 
 function myFunction(value,producto,mercado)
@@ -26,13 +26,13 @@ function myFunction(value,producto,mercado)
   var contenedor2 = "container2-" + value;
   var nombre = value;
   var texto = "Precios del " + producto;
-  var textovolumen = "Volumen de venta global del " + producto
+  var textovolumen = "Volumen de venta del " + producto
   //alert(loqusea);
   $(".grafito").attr("id",contenedor1);
   $(".grafito1").attr("id",contenedor2);
   $.post('/traemelosdatos/',{nombre:nombre,mercado:mercado}, function (data){  
     var chart;
-    var medi = "C$ cordobas por " + data.medida;
+    var medi = "por " + data.medida;
     chart = new Highcharts.Chart({
             chart: {
                 renderTo: contenedor1,
@@ -124,8 +124,8 @@ function myFunction(value,producto,mercado)
             tooltip: {
                 formatter: function() {
                     return '<b>'+ this.x +'</b><br/>'+
-                        'aca algo: '+ Highcharts.numberFormat(this.y, 1) +
-                        'algo';
+                        ': '+ Highcharts.numberFormat(this.y, 1) +
+                        '';
                 }
             },
                 series: [{
@@ -161,13 +161,13 @@ function mySecondFunction(value,titulo,mercado)
   var contenedor2 = "container2-" + value;
   var nombre = value;
   var texto = "Precios del " + titulo;
-  var textovolumen = "Volumen de venta global del " + titulo
+  var textovolumen = "Volumen de venta del " + titulo
   //alert(loqusea);
   $(".grafi1").attr("id",contenedor1);
   $(".grafi2").attr("id",contenedor2);
   $.post('/traemelosdatosmas/',{nombre:nombre,mercado:mercado}, function (data){  
     var chart;
-    var medi = "C$ cordobas por " + data.medida;
+    var medi = "por " + data.medida;
     chart = new Highcharts.Chart({
             chart: {
                 renderTo: contenedor1,
@@ -259,8 +259,8 @@ function mySecondFunction(value,titulo,mercado)
             tooltip: {
                 formatter: function() {
                     return '<b>'+ this.x +'</b><br/>'+
-                        'aca algo: '+ Highcharts.numberFormat(this.y, 1) +
-                        'algo';
+                        ': '+ Highcharts.numberFormat(this.y, 1) +
+                        '';
                 }
             },
                 series: [{
@@ -290,7 +290,7 @@ function mySecondFunction(value,titulo,mercado)
 }
 
     $(document).ready(function() {
-      $('#prodcutos-procesados').addClass('active');
+      $('#productos-procesados').addClass('active');
       $('.bxslider').bxSlider({
         minSlides: 6,
         maxSlides: 6,
