@@ -13,6 +13,7 @@ from .models import Movimiento, MovimientoProductosFresco, MovimientoProductosPr
 from .forms import *
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
+import thread
 
 #salidas
 
@@ -357,18 +358,18 @@ def enviar_correo(algos):
 	'''
 		funcion para mandar correos notificando que hay usuario nuevo registrado
 	'''
-	site = Site.objects.get_current()
-    users = [] #.exclude(username=foros.contraparte.username)
-    contenido = render_to_string('notas/notify_new_nota.txt', {'nota': notas,
-                                 'url': '%s/notas/%s' % (site, notas.id),
-                                 })
-    send_mail('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
+	users = ['crocha09.09@gmail.com','lord.carcas@gmail.com',]
+	contenido = render_to_string('mercado/notificar_correo.txt', {'nota': algos,
+	#contenido.content_subtype = "html" 
+	contenido.attach_alternative("text/html")						})
+	send_mail('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
 
 def registrar(request):
 	if request.method == 'POST':
 		form = UserCreateForm(request.POST)
 		if form.is_valid():
 			form.save()
+			thread.start_new_thread(enviar_correo, (form,))
 			return HttpResponseRedirect('/')
 	else:
 		form = UserCreateForm()

@@ -1,0 +1,13 @@
+Un usuario nuevo se acaba de registrar en 
+la plataforma de Mercado Campesinos
+
+
+Organizacion: {{nota.username}}
+Nombres: {{nota.first_name}}
+Apellidos: {{nota.last_name}}
+y el correo es {{nota.email}}
+
+No olvidar dar de alta en el sistema y al grupo de digitadores
+
+Plataforma mercado campesino
+SIMAS, 2013
