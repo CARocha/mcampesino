@@ -358,7 +358,7 @@ def enviar_correo(algo):
 	'''
 		funcion para mandar correos notificando que hay usuario nuevo registrado
 	'''
-	users = ['crocha09.09@gmail.com','lord.carcas@gmail.com',]
+	users = ['crocha09.09@gmail.com','fguharay@gmail.com','martha@simas.org.ni',]
 	contenido = render_to_string('mercado/notificar.html', 
 		                         {'algo': algo})
 	msg = EmailMultiAlternatives('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
