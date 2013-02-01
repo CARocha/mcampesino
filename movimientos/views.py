@@ -361,7 +361,7 @@ def enviar_correo(algo):
 	users = ['crocha09.09@gmail.com','fguharay@gmail.com','martha@simas.org.ni',]
 	contenido = render_to_string('mercado/notificar.html', 
 		                         {'algo': algo})
-	msg = EmailMultiAlternatives('Registro nuevo Mercado Campesino', contenido, 'mcampesino@127.0.0.1', users)
+	msg = EmailMultiAlternatives('Registro nuevo Mercado Campesino', contenido, 'simas.nicaragua@gmail.com', users)
 	msg.attach_alternative(contenido, "text/html")
 	msg.send()
 	
