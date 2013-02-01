@@ -354,22 +354,25 @@ def lista_mercados(request):
 	return render_to_response('lista_mercados.html', locals(), 
 		                       context_instance=RequestContext(request))
 
-def enviar_correo(algos):
+def enviar_correo(algo):
 	'''
 		funcion para mandar correos notificando que hay usuario nuevo registrado
 	'''
 	users = ['crocha09.09@gmail.com','lord.carcas@gmail.com',]
-	contenido = render_to_string('mercado/notificar_correo.txt', {'nota': algos,
-	#contenido.content_subtype = "html" 
-	contenido.attach_alternative("text/html")						})
-	send_mail('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
+	contenido = render_to_string('mercado/notificar.html', 
+		                         {'algo': algo})
+	msg = EmailMultiAlternatives('Alguien nuevo se inscribio :o', contenido, 'simas.nicaragua@gmail.com', users)
+	msg.attach_alternative(contenido, "text/html")
+	msg.send()
+	
 
 def registrar(request):
 	if request.method == 'POST':
 		form = UserCreateForm(request.POST)
 		if form.is_valid():
-			form.save()
-			thread.start_new_thread(enviar_correo, (form,))
+			uncommit = form.save(commit=False)
+			uncommit.save()
+			thread.start_new_thread(enviar_correo, (uncommit,))
 			return HttpResponseRedirect('/')
 	else:
 		form = UserCreateForm()
