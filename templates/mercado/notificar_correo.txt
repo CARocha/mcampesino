@@ -2,10 +2,11 @@ Un usuario nuevo se acaba de registrar en
 la plataforma de Mercado Campesinos
 
 
-Organizacion: {{nota.username}}
-Nombres: {{nota.first_name}}
-Apellidos: {{nota.last_name}}
-y el correo es {{nota.email}}
+Organizacion: {{algo.username}}
+Nombres: {{algo.first_name}}
+Apellidos: {{algo.last_name}}
+y el correo es {{algo.email}}
+
 
 No olvidar dar de alta en el sistema y al grupo de digitadores
 
