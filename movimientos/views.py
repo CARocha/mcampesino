@@ -14,6 +14,7 @@ from .forms import *
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 import thread
+from correos.models import Correos
 
 #salidas
 
@@ -358,7 +359,7 @@ def enviar_correo(algo):
 	'''
 		funcion para mandar correos notificando que hay usuario nuevo registrado
 	'''
-	users = ['crocha09.09@gmail.com','fguharay@gmail.com','martha@simas.org.ni',]
+	users = [obj.correo for obj in Correos.objects.all()]
 	contenido = render_to_string('mercado/notificar.html', 
 		                         {'algo': algo})
 	msg = EmailMultiAlternatives('Registro nuevo Mercado Campesino', contenido, 'simas.nicaragua@gmail.com', users)

@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'smart_selects',
     'south',
     #'debug_toolbar',
+    'correos',
 )
 
 # A sample logging configuration. The only tangible logging
