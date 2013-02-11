@@ -1,7 +1,10 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+{%if not request.user.is_superuser %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/ocultaradmin.css" /> {%endif%}
+{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -12,25 +15,14 @@
 {% block content %}
 <div id="content-main">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script>
- $(document).ready(function() {
-   
-   {%if not request.user.is_superuser %}
-       $(".module:eq(2) tr:eq(1)").css("display", "none");
-       $(".module:eq(2) tr:eq(2)").css("display", "none");
-       $(".module:eq(2) td:eq(0) a:eq(0)").css("display", "none");
-   {%else%}
-       $(".module:eq(3) td:eq(0) a:eq(0)").css("display", "none");
-   {%endif%}
- });
-</script>
+
 {% if app_list %}
     {% for app in app_list %}
-        <div class="module">
+        <div class="module {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}">
         <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
         {% for model in app.models %}
-            <tr>
+            <tr id="{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}-{{forloop.counter }}">
             {% if model.admin_url %}
                 <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
             {% else %}
@@ -38,7 +30,7 @@
             {% endif %}
 
             {% if model.add_url %}
-                <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a>
+                <td><a href="{{ model.add_url }}" class="addlink {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}-solo{{forloop.counter }}">{% trans 'Add' %}</a>
                 {% ifequal app.name 'Movimientos' %}
                     {% ifequal model.name 'Movimiento de los productos en el mercado' %}
                     <a href="/agregar/movimientos/" class="addlink">Añadir avanzada</a>

@@ -61,8 +61,8 @@ class RegistroMercado(models.Model):
 	usuario = models.ForeignKey(User)
 
 	class Meta:
-		verbose_name=u'Registro mercado'
 		verbose_name_plural=u'Registro de mercados'
+		
 
 	def foto(self):
 		atach = Fotos.objects.filter(fk_mercado__id=self.id)
@@ -137,8 +137,6 @@ class ApoyanMercado(models.Model):
 
 	def __unicode__(self):
 		return self.nombre
-
-
 
 class ActividadMercado(models.Model):
 	fkmercado = models.ForeignKey(RegistroMercado, verbose_name=u'Mercados')
