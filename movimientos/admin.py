@@ -43,6 +43,13 @@ admin.site.register(ProductosProcesados)
 admin.site.register(Fotos)
 
 class ActividadMercadoAdmin(admin.ModelAdmin):
+
+    def queryset(self, request):
+        qs = super(ActividadMercadoAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(fkmercado__usuario=request.user)
+
 	filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')
 	fieldsets = (
         (None, {
@@ -99,6 +106,13 @@ class MovimientoProductosProcesadosInline(admin.TabularInline):
     max_num = 0
 
 class MovimientoAdmin(AutocompleteModelAdmin):
+
+    def queryset(self, request):
+        qs = super(MovimientoAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(usuario=request.user)
+
     search_fields = ['__unicode__']
     list_display = ['__unicode__', 'fecha']
     list_filter = ['nombre_mercado']
