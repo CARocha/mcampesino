@@ -50,8 +50,8 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(fkmercado__usuario=request.user)
 
-	filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')
-	fieldsets = (
+    filter_horizontal = ('apoyan_mercado','productos_frescos','productos_procesados')
+    fieldsets = (
         (None, {
             'fields': (('fkmercado', 'fecha_actividad'),)
         }),
@@ -63,7 +63,7 @@ class ActividadMercadoAdmin(admin.ModelAdmin):
                        ('apoyan_mercado','productos_frescos','productos_procesados'))
         }),
         )
-	class Media:
+    class Media:
 		css = {
             'all': ('/files/css/chosen.css',),
        	}
