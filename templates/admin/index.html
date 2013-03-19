@@ -33,7 +33,7 @@
                 <td><a href="{{ model.add_url }}" class="addlink {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}-solo{{forloop.counter }}">{% trans 'Add' %}</a>
                 {% ifequal app.name 'Movimientos' %}
                     {% ifequal model.name 'Movimiento de los productos en el mercado' %}
-                    <a href="/agregar/movimientos/" class="addlink">Añadir avanzada</a>
+                    <a href="/agregar/movimientos/" class="addlink">Añadir</a>
                     {% endifequal %}
                 {% endifequal %}
                 </td>
