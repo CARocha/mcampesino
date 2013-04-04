@@ -286,7 +286,7 @@ function mySecondFunction(value,titulo,mercado)
 }
 
     $(document).ready(function() {
-      //$('#productos-procesados').addClass('active');
+      $('#productos-procesados').addClass('active');
       $('.bxslider').bxSlider({
         minSlides: 6,
         maxSlides: 6,
@@ -295,8 +295,9 @@ function mySecondFunction(value,titulo,mercado)
         infiniteLoop: false,
         pager:false,
         controls: true,
-        moveSlides :2,
+        moveSlides:2,
         autoControls: true,
+        hideControlOnEnd: true
       });
     });  
 </script>
@@ -383,8 +384,7 @@ function mySecondFunction(value,titulo,mercado)
                       {% for fresco in lista1 %}
                         <a href="#" class="btn btn-producto" onclick="return myFunction('{{fresco.0}}','{{fresco.1}}','{{mercado.id}}')">
                         <img src="{{fresco.2.url_60x60}}" class="img-circle"><br>{{fresco.1}}
-                        </a>
-                        
+                        </a> 
                       {% endfor %}
                       
                     {%endif%}
