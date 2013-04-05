@@ -87,6 +87,12 @@
                     <a href="uploads/Manual_Uso_MercadosCampesinos.pdf" title="Manual del usuario" class="btn btn-info">Manual del usuario</a>
                     <a href="uploads/fichas.pdf" title="Manual del usuario" class="btn btn-info">
                     Fichas</a>
+                    <br>
+                    {% if user.is_authenticated %}
+                      <p>Manual del administrador</p>
+                      <a href="uploads/Manual_Admin_MercadosCampesinos.pdf" title="Manual del usuario" class="btn btn-info">
+                    Manual administración</a>
+                    {% endif %}
                   </p>
                 </div>
             </div>
